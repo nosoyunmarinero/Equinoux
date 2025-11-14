@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "@vitejs/plugin-react": "^5.1.1",
+    "chrome-launcher": "^1.2.1",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "lighthouse": "^13.0.1",
+    "react-router-dom": "^7.9.6",
+    "vite": "^7.2.2"
+  },
+  "scripts": {
+    "dev:frontend": "vite",
+    "dev:backend": "node backend/app.js",
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "name": "test-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "vite.config.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

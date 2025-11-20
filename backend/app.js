@@ -24,6 +24,10 @@ app.use("/puppeteer", puppeteerRoute);
 const axeRoute = require("./routes/axe");
 app.use("/axe", axeRoute);
 
+// Full analysis
+const fullAnalysisRoute = require("./routes/fullAnalysis");
+app.use("/full-analysis", fullAnalysisRoute);
+
 app.listen(PORT, () => {
   console.log(`Servidor backend corriendo en http://localhost:${PORT}`);
 });

@@ -12,21 +12,17 @@ app.get("/", (req, res) => {
   res.json({ mensaje: "Servidor backend corriendo 🚀", status: "ok" });
 });
 
-//Import de Analize
-const analyzeRoute = require("./routes/analyze");
-app.use("/analyze", analyzeRoute);
-
-// Import Puppeteer
-const puppeteerRoute = require("./routes/puppeteer");
-app.use("/puppeteer", puppeteerRoute);
-
-// Axe Core
-const axeRoute = require("./routes/axe");
-app.use("/axe", axeRoute);
-
-// Full analysis
+// Importar rutas
 const fullAnalysisRoute = require("./routes/fullAnalysis");
+const analyzeRoute = require("./routes/analyze");
+const puppeteerRoute = require("./routes/puppeteer");
+const axeRoute = require("./routes/axe");
+
+// Usar rutas
 app.use("/full-analysis", fullAnalysisRoute);
+app.use("/analyze", analyzeRoute);
+app.use("/puppeteer", puppeteerRoute);
+app.use("/axe", axeRoute);
 
 app.listen(PORT, () => {
   console.log(`Servidor backend corriendo en http://localhost:${PORT}`);

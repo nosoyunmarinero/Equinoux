@@ -16,6 +16,14 @@ app.get("/", (req, res) => {
 const analyzeRoute = require("./routes/analyze");
 app.use("/analyze", analyzeRoute);
 
+// Import Puppeteer
+const puppeteerRoute = require("./routes/puppeteer");
+app.use("/puppeteer", puppeteerRoute);
+
+// Axe Core
+const axeRoute = require("./routes/axe");
+app.use("/axe", axeRoute);
+
 app.listen(PORT, () => {
   console.log(`Servidor backend corriendo en http://localhost:${PORT}`);
 });

@@ -4,7 +4,7 @@ const lighthouse = require("lighthouse").default;
 
 const router = express.Router();
 
-//Endpoint POST 
+//Endpoint POST
 router.post("/", async (req, res) => {
   const { url } = req.body;
 
@@ -29,22 +29,22 @@ router.post("/", async (req, res) => {
     const report = runnerResult.lhr;
 
     const issues = {
-  accessibility: {
-    imageAlt: report.audits["image-alt"],
-    htmlLang: report.audits["html-has-lang"],
-    buttonName: report.audits["button-name"],
-    colorContrast: report.audits["color-contrast"]
-  },
-  seo: {
-    metaDescription: report.audits["meta-description"],
-    viewport: report.audits["viewport"],
-    canonical: report.audits["canonical"]
-  },
-  bestPractices: {
-    https: report.audits["uses-https"],
-    vulnerableLibs: report.audits["no-vulnerable-libraries"]
-  }
-};
+      accessibility: {
+        imageAlt: report.audits["image-alt"],
+        htmlLang: report.audits["html-has-lang"],
+        buttonName: report.audits["button-name"],
+        colorContrast: report.audits["color-contrast"],
+      },
+      seo: {
+        metaDescription: report.audits["meta-description"],
+        viewport: report.audits["viewport"],
+        canonical: report.audits["canonical"],
+      },
+      bestPractices: {
+        https: report.audits["uses-https"],
+        vulnerableLibs: report.audits["no-vulnerable-libraries"],
+      },
+    };
 
     // 6. Respondemos con JSON
     res.json({
@@ -53,10 +53,12 @@ router.post("/", async (req, res) => {
       accessibility: report.categories.accessibility.score,
       seo: report.categories.seo.score,
       bestPractices: report.categories["best-practices"].score,
-      issues
+      issues,
     });
   } catch (error) {
-    res.status(500).json({ error: "Error al ejecutar Lighthouse", detalle: error.message });
+    res
+      .status(500)
+      .json({ error: "Error al ejecutar Lighthouse", detalle: error.message });
   }
 });
 

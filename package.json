@@ -1,11 +1,13 @@
 {
   "dependencies": {
     "@vitejs/plugin-react": "^5.1.1",
+    "axe-core": "^4.11.0",
     "chrome-launcher": "^1.2.1",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "lighthouse": "^13.0.1",
     "puppeteer": "^24.30.0",
+    "react-router": "^7.9.6",
     "react-router-dom": "^7.9.6",
     "vite": "^7.2.2"
   },

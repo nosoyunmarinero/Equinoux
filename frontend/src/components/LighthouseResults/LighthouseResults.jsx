@@ -18,24 +18,32 @@ function LighthouseResults({ data }) {
       {issues && Object.keys(issues).length > 0 && (
         <div className="issues">
           <h3>Issues</h3>
-          {Object.entries(issues).map(([category, items], i) => (
-            <div key={i}>
-              <h4>{category}</h4>
-              <ul>
-                {Array.isArray(items) && items.length > 0 ? (
-                  items.map((issue, j) => (
-                    <li key={j}>
-                      {typeof issue === "string"
-                        ? issue
-                        : issue.description || JSON.stringify(issue)}
-                    </li>
-                  ))
+          {Object.entries(issues).map(([category, categoryIssues]) => {
+            const issueCount = Object.keys(categoryIssues).length;
+            return (
+              <div key={category}>
+                <h4>{category} ({issueCount} issues)</h4>
+                {issueCount > 0 ? (
+                  <ul>
+                    {Object.entries(categoryIssues).map(([issueKey, issue]) => (
+                      <li key={issueKey}>
+                        <strong>{issue.title}</strong>
+                        <br />
+                        {issue.description}
+                        {issue.displayValue && (
+                          <span style={{ color: '#ff6b6b' }}>
+                            <br />Value: {issue.displayValue}
+                          </span>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
                 ) : (
-                  <li>No issues in {category}</li>
+                  <p>No issues found in {category}</p>
                 )}
-              </ul>
-            </div>
-          ))}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

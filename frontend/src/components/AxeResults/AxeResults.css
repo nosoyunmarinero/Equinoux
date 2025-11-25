@@ -1,0 +1,208 @@
+/* AxeResults.css */
+
+/* Contenedor principal de resultados Axe */
+.axe-results {
+  background: #2a2b30;
+  border: 1px solid #3a3b40;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.axe-results h2 {
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #f0f0f0;
+}
+
+.axe-results h3 {
+  margin-top: 20px;
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #f0f0f0;
+}
+
+.axe-results h4 {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f0f0f0;
+}
+
+/* Información de URL */
+.url-info {
+  padding: 10px;
+  background-color: #1e1f23;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  color: #e0e0e0;
+  overflow-wrap: break-word;
+}
+
+.url-info strong {
+  color: #4a90e2;
+}
+
+/* Total de violaciones */
+.total-violations {
+  padding: 10px;
+  background-color: #1e1f23;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #e0e0e0;
+}
+
+/* Contenedor de violaciones */
+.violations-container {
+  margin-top: 20px;
+}
+
+/* Grupos de impacto */
+.impact-group {
+  margin-bottom: 20px;
+  padding: 16px;
+  border-radius: 8px;
+  border-left: 4px solid;
+}
+
+.impact-group.impact-critical {
+  background-color: rgba(220, 38, 38, 0.1);
+  border-left-color: #dc2626;
+}
+
+.impact-group.impact-serious {
+  background-color: rgba(234, 88, 12, 0.1);
+  border-left-color: #ea580c;
+}
+
+.impact-group.impact-moderate {
+  background-color: rgba(234, 179, 8, 0.1);
+  border-left-color: #eab308;
+}
+
+.impact-group.impact-minor {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-left-color: #3b82f6;
+}
+
+.impact-group.impact-unknown {
+  background-color: rgba(107, 114, 128, 0.1);
+  border-left-color: #6b7280;
+}
+
+/* Lista de violaciones */
+.violations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Item individual de violación */
+.violation-item {
+  background-color: #1e1f23;
+  padding: 14px;
+  border-radius: 6px;
+  border-left: 3px solid;
+}
+
+.violation-item.violation-critical {
+  border-left-color: #dc2626;
+}
+
+.violation-item.violation-serious {
+  border-left-color: #ea580c;
+}
+
+.violation-item.violation-moderate {
+  border-left-color: #eab308;
+}
+
+.violation-item.violation-minor {
+  border-left-color: #3b82f6;
+}
+
+.violation-item.violation-unknown {
+  border-left-color: #6b7280;
+}
+
+/* Título de violación */
+.violation-title {
+  font-weight: 600;
+  color: #4a90e2;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+/* Descripción de violación */
+.violation-description {
+  color: #e0e0e0;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+/* Ayuda de violación */
+.violation-help {
+  color: #bbb;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.violation-help strong {
+  color: #e0e0e0;
+}
+
+/* Nodos afectados */
+.affected-nodes {
+  margin-top: 12px;
+  padding: 10px;
+  background-color: #2a2b30;
+  border-radius: 6px;
+}
+
+.affected-nodes-count {
+  font-weight: 600;
+  color: #e0e0e0;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+/* Preview de nodo */
+.node-preview {
+  padding: 8px;
+  margin: 6px 0;
+  background-color: #1e1f23;
+  border-radius: 4px;
+  font-family: "Courier New", monospace;
+  font-size: 0.85rem;
+  color: #bbb;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Más nodos */
+.more-nodes {
+  margin-top: 8px;
+  font-style: italic;
+  color: #888;
+  font-size: 0.85rem;
+}
+
+/* Sin violaciones */
+.no-violations {
+  padding: 20px;
+  background-color: rgba(34, 197, 94, 0.1);
+  border: 1px solid #22c55e;
+  border-radius: 8px;
+  color: #86efac;
+  font-weight: 600;
+  text-align: center;
+}

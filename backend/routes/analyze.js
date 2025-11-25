@@ -28,22 +28,39 @@ router.post("/", async (req, res) => {
     // 5. Extraemos resultados principales
     const report = runnerResult.lhr;
 
+    // Función para obtener issues con problemas (score < 1)
+    const getIssues = (audits) => {
+      const result = {};
+      for (const [key, audit] of Object.entries(audits)) {
+        // Solo incluir audits con score < 1 (que tienen problemas)
+        if (audit.score !== null && audit.score < 1 && audit.scoreDisplayMode === 'binary') {
+          result[key] = {
+            title: audit.title,
+            description: audit.description,
+            score: audit.score,
+            displayValue: audit.displayValue
+          };
+        }
+      }
+      return result;
+    };
+
     const issues = {
-      accessibility: {
-        imageAlt: report.audits["image-alt"],
-        htmlLang: report.audits["html-has-lang"],
-        buttonName: report.audits["button-name"],
-        colorContrast: report.audits["color-contrast"],
-      },
-      seo: {
-        metaDescription: report.audits["meta-description"],
-        viewport: report.audits["viewport"],
-        canonical: report.audits["canonical"],
-      },
-      bestPractices: {
-        https: report.audits["uses-https"],
-        vulnerableLibs: report.audits["no-vulnerable-libraries"],
-      },
+      accessibility: getIssues({
+        "image-alt": report.audits["image-alt"],
+        "html-has-lang": report.audits["html-has-lang"],
+        "button-name": report.audits["button-name"],
+        "color-contrast": report.audits["color-contrast"],
+      }),
+      seo: getIssues({
+        "meta-description": report.audits["meta-description"],
+        "viewport": report.audits["viewport"],
+        "canonical": report.audits["canonical"],
+      }),
+      bestPractices: getIssues({
+        "uses-https": report.audits["uses-https"],
+        "no-vulnerable-libraries": report.audits["no-vulnerable-libraries"],
+      }),
     };
 
     // 6. Respondemos con JSON

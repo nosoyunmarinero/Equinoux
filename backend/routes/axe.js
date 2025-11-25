@@ -1,6 +1,6 @@
-const express = require("express");
-const puppeteer = require("puppeteer");
-const axeCore = require("axe-core");
+import express from "express";
+import puppeteer from "puppeteer";
+import axeCore from "axe-core";
 
 const router = express.Router();
 
@@ -41,10 +41,11 @@ router.post("/", async (req, res) => {
       })),
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Error al ejecutar axe-core", detalle: error.message });
+    res.status(500).json({
+      error: "Error al ejecutar axe-core",
+      detalle: error.message,
+    });
   }
 });
 
-module.exports = router;
+export default router;

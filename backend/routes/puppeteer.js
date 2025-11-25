@@ -1,9 +1,9 @@
-const express = require("express");
-const puppeteer = require("puppeteer");
+import express from "express";
+import puppeteer from "puppeteer";
 
 const router = express.Router();
 
-//Endopoint Post Puppeteer
+// Endpoint POST Puppeteer
 router.post("/", async (req, res) => {
   const { url } = req.body;
 
@@ -12,35 +12,35 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    // 1 Lanzamos el navegador
+    // 1. Lanzamos el navegador
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
 
-    //2 Medimos tiempo
+    // 2. Medimos tiempo de carga
     const start = Date.now(); // tiempo inicial
     await page.goto(url, { waitUntil: "networkidle2" });
     const end = Date.now(); // tiempo final
 
     const loadTime = end - start; // diferencia en milisegundos
 
-    //3 Extraemos informacion
+    // 3. Extraemos información
     const title = await page.title();
 
-    //4 Cerramos Browser
+    // 4. Cerramos navegador
     await browser.close();
 
-    // Respondemos con JSON
-
+    // 5. Respondemos con JSON
     res.json({
       url,
       title,
       loadTime: `${loadTime} ms`,
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Error al ejecutar Puppeteer", detalle: error.message });
+    res.status(500).json({
+      error: "Error al ejecutar Puppeteer",
+      detalle: error.message,
+    });
   }
 });
 
-module.exports = router;
+export default router;

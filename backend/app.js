@@ -1,5 +1,5 @@
-const express = require("express");
-const cors = require("cors");
+import express from "express";
+import cors from "cors";
 
 const app = express();
 const PORT = 3001;
@@ -13,10 +13,10 @@ app.get("/", (req, res) => {
 });
 
 // Importar rutas
-const fullAnalysisRoute = require("./routes/fullAnalysis");
-const analyzeRoute = require("./routes/analyze");
-const puppeteerRoute = require("./routes/puppeteer");
-const axeRoute = require("./routes/axe");
+import fullAnalysisRoute from "./routes/fullAnalysis.js";
+import analyzeRoute from "./routes/analyze.js";
+import puppeteerRoute from "./routes/puppeteer.js";
+import axeRoute from "./routes/axe.js";
 
 // Usar rutas
 app.use("/full-analysis", fullAnalysisRoute);

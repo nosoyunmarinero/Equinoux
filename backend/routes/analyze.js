@@ -1,10 +1,10 @@
-const express = require("express");
-const chromeLauncher = require("chrome-launcher");
-const lighthouse = require("lighthouse").default;
+import express from "express";
+import * as chromeLauncher from "chrome-launcher";
+import lighthouse from "lighthouse";
 
 const router = express.Router();
 
-//Endpoint POST
+// Endpoint POST
 router.post("/", async (req, res) => {
   const { url } = req.body;
 
@@ -56,10 +56,11 @@ router.post("/", async (req, res) => {
       issues,
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Error al ejecutar Lighthouse", detalle: error.message });
+    res.status(500).json({
+      error: "Error al ejecutar Lighthouse",
+      detalle: error.message,
+    });
   }
 });
 
-module.exports = router;
+export default router;

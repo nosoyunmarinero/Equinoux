@@ -2,10 +2,11 @@ function PuppeteerResults({ data }) {
   if (!data) return null;
 
   return (
-    <div>
-      <h3>Puppeteer</h3>
-      <p>Título: {data.title}</p>
-      <p>Tiempo de carga: {data.loadTime}</p>
+    <div className="card">
+      <h2>Puppeteer Results</h2>
+      <p><strong>URL:</strong> {data.url}</p>
+      <p><strong>Título:</strong> {data.title}</p>
+      <p><strong>Tiempo de carga:</strong> {data.loadTime}</p>
     </div>
   );
 }

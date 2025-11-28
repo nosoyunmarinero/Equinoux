@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import LighthouseResults from "../LighthouseResults/LighthouseResults";
 import PuppeteerResults from "../PuppeteerResults/PuppeteerResults";
@@ -10,11 +10,25 @@ import background2 from "../../images/background2.jpg";
 import browser from "../../images/browser.png";
 import girl from "../../images/girl.png";
 
+import backgroundMusic from "../../audio/song1.mp3";
 
 function HomePage() {
   const [url, setUrl] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+    const audioRef = useRef(null);
+
+  const toggleMusic = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,6 +46,13 @@ function HomePage() {
 
   return (
     <>
+    <audio 
+        ref={audioRef}
+        src={backgroundMusic}
+        loop
+        autoPlay
+        style={{ display: 'none' }} // 👈 Oculto completamente
+      />
       <section className="main">
         <div className="square">
           <div className="top">
@@ -40,7 +61,10 @@ function HomePage() {
               <h1 className="header__heading">Equinox<br/></h1>
               <h3 className="header__subheading">An App to test your web page</h3>
             </div>
-            <img src={ball} alt="ball" className="ball" />
+            <img  src={ball} 
+              alt="music toggle" 
+              className={`ball ${isPlaying ? 'ball--playing' : ''}`}
+              onClick={toggleMusic} />
           </div>
           <div className="square__heading">
             <h2 className="square__heading_text">Enter your URL below</h2>

@@ -25,30 +25,51 @@ function HomePage() {
   };
 
   return (
-    <div className="homepage-container">
-      <h1 className="title">Web Analysis Dashboard</h1>
-
-      <form onSubmit={handleSubmit} className="form">
-        <input
-          type="url"
-          placeholder="https://www.test.com"
-          required
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-        />
-        <button type="submit">Run Test</button>
-      </form>
-
-      {loading && <span className="loading">⏳ Analizando...</span>}
-
-      {result && (
-        <div className="results-grid">
-          <LighthouseResults data={result.lighthouse} />
-          <PuppeteerResults data={result.puppeteer} />
-          <AxeResults data={result.axe} />
+    <>
+      <section className="main">
+        <div className="square">
+          <div className="top">
+            <img src="./src/browser-icon.png" alt="browser" className="browser-icon" />
+            <div className="header">
+              <h1 className="header__heading">Equinox<br/></h1>
+              <h3 className="header__subheading">An App to test your web page</h3>
+            </div>
+            <img src="./src/ball.png" alt="ball" className="ball" />
+          </div>
+          <div className="square__heading">
+            <h2 className="square__heading_text">Enter your URL below</h2>
+            <img src="./src/background2.jpg" alt="background2" className="square__heading_background" />
+          </div>
+          <form onSubmit={handleSubmit} className="form">
+            <input
+              type="url"
+              id="url"
+              placeholder="URL"
+              className="input"
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              required
+            />
+            <button className="test-button" type="submit">Run</button>
+          </form>
+          <img src="./src/girl.png" alt="girl" className="square__girl" />
         </div>
-      )}
-    </div>
+        
+        {loading && <span className="loading">⏳ Analizando...</span>}
+
+        {result && (
+          <div className="results-grid">
+            <LighthouseResults data={result.lighthouse} />
+            <PuppeteerResults data={result.puppeteer} />
+            <AxeResults data={result.axe} />
+          </div>
+        )}
+      </section>
+      
+      <div className="grass-container">
+        <img src="./src/grass2.png" alt="grass" className="grass" />
+      </div>
+    </>
   );
 }
 

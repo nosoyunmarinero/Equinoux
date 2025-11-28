@@ -12,7 +12,7 @@ content: "";
 position: absolute;
 top: 0; left: 0;
  width: 100%; height: 100%;
- background-image: url("../../images/background.PNG");
+ background-image: url("../../images/background.jpg");
  background-size: cover; 
  background-position: center;
  opacity: 0.6;
@@ -22,166 +22,161 @@ top: 0; left: 0;
 .square {
 background-color: white;
 height: 80%;
-    width: 60%;
-    border-radius: 40px;
- 
-     /* Fondo semitransparente */
-    background: rgba(97, 92, 119, 0.2);
- 
-    /* Efecto cristal */
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(15px); /* soporte en Safari */
- 
-    /* Opcional: borde suave para resaltar el efecto */
-    border: 3px solid rgb(41, 26, 109);
-   
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    flex-direction: column;
-     /* 👇 centrado en la página */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-     /* 👈 separación entre hijos */
-   
+width: 60%;
+border-radius: 40px;
+/* Fondo semitransparente */
+background: rgba(97, 92, 119, 0.2);
+/* Efecto cristal */
+backdrop-filter: blur(10px);
+-webkit-backdrop-filter: blur(15px); /* soporte en Safari */
+/* Opcional: borde suave para resaltar el efecto */
+border: 3px solid rgb(41, 26, 109);
+display: flex;
+justify-content: start;
+align-items: center;
+flex-direction: column;
+/* 👇 centrado en la página */
+position: absolute;top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+/* 👈 separación entre hijos */
 }
- 
+
 .top{
-  background: linear-gradient(
-    to bottom,
-    rgba(151, 153, 243, 0.4),   /* blanco translúcido arriba */
-    rgba(41, 26, 109, 0.9)      /* tu color base abajo */
-  );
-  width: 100%;
-  height: 120px;
-  border-top-left-radius: 37px;
-  border-top-right-radius: 37px;
-  border-bottom: 2px solid rgb(5, 12, 36);
-  display: flex;                
-  align-items: center;        
-  align-items: st;                  
+background: linear-gradient(
+to bottom,
+ rgba(151, 153, 243, 0.4), /* blanco translúcido arriba */
+rgba(41, 26, 109, 0.9) /* tu color base abajo */
+);
+width: 100%;
+height: 120px;
+border-top-left-radius: 37px;
+border-top-right-radius: 37px;
+border-bottom: 2px solid rgb(5, 12, 36);
+display: flex;
+align-items: center; 
+ justify-content: space-between; /* 👈 Distribuye el espacio */
+  padding: 0 15px; /* 👈 Padding lateral */
 }
 .browser-icon {
-    margin: 15px;
-    opacity: 0.7;
+margin: 15px;
+opacity: 0.7;
 }
- 
+
 .header{
-margin-left: 30px;
 color: rgba(240, 248, 255, 0.555);
+text-align: center;
 }
- 
+
 .header__heading {
-    font-size: 40px;
-    margin: 0;
+font-size: 40px;
+ margin: 0;
+ 
 }
 .header__subheading {
-  margin-top: 10px;
+margin-top: 10px;
 }
- 
+
 .ball {
-  max-width: 100px;
-  margin-left: 600px;
-  opacity: 0.7;
+max-width: 100px;
+opacity: 0.7;
 }
 .square__girl{
-  max-width: 200px;
-  margin-left: 850px;
-  position: absolute;
-  bottom: 0px;   /* 👈 distancia desde el borde inferior */
-  right: 0px;
-  opacity: 0.9;
+ max-width: 200px;
+margin-left: 850px;
+position: absolute;
+bottom: 0px; /* 👈 distancia desde el borde inferior */
+ right: 0px;
+ opacity: 0.9;
 }
- 
- 
+
+
 .square__heading{
-  margin: 0;
-  padding: 20px;
+ margin: 0;
+ padding: 20px;
 }
 .square__heading_text {
-  margin: 0;
-  color: #ffffff85;
-  font-size: 50px;
+ margin: 0;
+ color: #ffffff85;
+ font-size: 50px;
 }
- 
+
 .square__heading_background{
-  max-width: 550px;
-  z-index: -1;
-  border: 4px solid rgba(41, 26, 109, 0.9);
-  margin-top: 20px;
-  /* 👇 animación infinita */
-  animation: glowPulse 4s ease-in-out infinite;
+ max-width: 550px;
+ z-index: -1;
+ border: 4px solid rgba(41, 26, 109, 0.9);
+ margin-top: 20px;
+ /* 👇 animación infinita */
+ animation: glowPulse 4s ease-in-out infinite;
 }
- 
+
 /* Definición de la animación */
 @keyframes glowPulse {
-  0% {
-    box-shadow: none; /* sin sombra */
-  }
-  50% {
-    box-shadow: 0px 0px 25px rgb(236, 239, 255); /* sombra activa */
-  }
-  100% {
-    box-shadow: none; /* vuelve a apagarse */
-  }
+ 0% {
+  box-shadow: none; /* sin sombra */
+ }
+ 50% {
+  box-shadow: 0px 0px 25px rgb(236, 239, 255); /* sombra activa */
+ }
+ 100% {
+  box-shadow: none; /* vuelve a apagarse */
+ }
 }
- 
+
 .form {
-    display: flex;
-    margin-top: 20px;
-   
+  display: flex;
+  margin-top: 20px;
+ 
 }
- 
+
 .input {
-    width: 500px;
-    height: 35px;
-    margin-right: 5px;
-    border-radius: 15px;
-    padding: 10px;
-     /* Fondo translúcido estilo cristal */
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
- 
-    /* Opcional: borde suave */
-    border: 1px solid rgba(255, 255, 255, 0.3);
- 
-    color: #000000; /* texto visible */
-      transition: box-shadow 1000ms ease;
+  width: 500px;
+  margin-right: 5px;
+  border-radius: 15px;
+  padding: 10px;
+  /* Fondo translúcido estilo cristal */
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+ /* Opcional: borde suave */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  color: #000000; /* texto visible */
+   transition: box-shadow 1000ms ease;
+    z-index: 5;
 }
 .input:hover{
-  box-shadow: 0px 0px 25px rgb(221, 223, 236);
+ box-shadow: 0px 0px 25px rgb(221, 223, 236);
 }
- 
+
 .test-button {
-   border-radius: 15px;
-   font-family: "Noto Sans", sans-serif;
-   font-size: 30px;
-   cursor: pointer;
-   padding-left: 25px;
-   padding-right: 25px;
- 
-   background: rgba(255, 255, 255, 0.2);
-   backdrop-filter: blur(10px);
-   -webkit-backdrop-filter: blur(10px);
- 
-   border: 1px solid rgba(255, 255, 255, 0.3);
- 
-   color: #000;
- 
-    transition: box-shadow 1000ms ease;
+ border-radius: 15px;
+ font-family: "Noto Sans", sans-serif;
+ font-size: 30px;
+ cursor: pointer;
+ padding-left: 25px;
+ padding-right: 25px;
+
+ background: rgba(255, 255, 255, 0.2);
+ backdrop-filter: blur(10px);
+ -webkit-backdrop-filter: blur(10px);
+
+ border: 1px solid rgba(255, 255, 255, 0.3);
+
+ color: #000;
+
+  transition: box-shadow 1000ms ease;
 }
- 
+
 .test-button:hover{
-  box-shadow: 0px 0px 25px rgb(221, 223, 236);
+ box-shadow: 0px 0px 25px rgb(221, 223, 236);
 }
- 
+
 .grass {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  z-index: -1;
+ position: fixed;
+ bottom: 0;
+ left: 0;
+ width: 100%;
+ z-index: -1;
 }

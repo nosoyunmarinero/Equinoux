@@ -3,7 +3,13 @@ import axios from "axios";
 import LighthouseResults from "../LighthouseResults/LighthouseResults";
 import PuppeteerResults from "../PuppeteerResults/PuppeteerResults";
 import AxeResults from "../AxeResults/AxeResults";
-// import "./HomePage.css";
+import "./HomePage.css";
+
+import ball from "../../images/ball.png";
+import background2 from "../../images/background2.jpg";
+import browser from "../../images/browser.png";
+import girl from "../../images/girl.png";
+
 
 function HomePage() {
   const [url, setUrl] = useState("");
@@ -29,16 +35,16 @@ function HomePage() {
       <section className="main">
         <div className="square">
           <div className="top">
-            <img src="./src/browser-icon.png" alt="browser" className="browser-icon" />
+            <img src={browser} alt="browser" className="browser-icon" />
             <div className="header">
               <h1 className="header__heading">Equinox<br/></h1>
               <h3 className="header__subheading">An App to test your web page</h3>
             </div>
-            <img src="./src/ball.png" alt="ball" className="ball" />
+            <img src={ball} alt="ball" className="ball" />
           </div>
           <div className="square__heading">
             <h2 className="square__heading_text">Enter your URL below</h2>
-            <img src="./src/background2.jpg" alt="background2" className="square__heading_background" />
+            <img src={background2} alt="background2" className="square__heading_background" />
           </div>
           <form onSubmit={handleSubmit} className="form">
             <input
@@ -52,7 +58,7 @@ function HomePage() {
             />
             <button className="test-button" type="submit">Run</button>
           </form>
-          <img src="./src/girl.png" alt="girl" className="square__girl" />
+          <img src={girl} alt="girl" className="square__girl" />
         </div>
         
         {loading && <span className="loading">⏳ Analizando...</span>}
@@ -67,7 +73,7 @@ function HomePage() {
       </section>
       
       <div className="grass-container">
-        <img src="./src/grass2.png" alt="grass" className="grass" />
+        <img src="../../images/grass2.png" alt="grass" className="grass" />
       </div>
     </>
   );

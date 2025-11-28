@@ -36,19 +36,6 @@ h1, h2 {
   margin-bottom: 20px;
 }
 
-input[type="url"] {
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #444;
-  background-color: #2a2b30;
-  color: #e0e0e0;
-  margin-right: 10px;
-  width: 300px;
-}
-
-input::placeholder {
-  color: #888;
-}
 
 button {
   background-color: #4a90e2;

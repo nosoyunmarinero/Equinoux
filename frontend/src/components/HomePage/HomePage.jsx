@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import LighthouseResults from "../LighthouseResults/LighthouseResults";
-import PuppeteerResults from "../PuppeteerResults/PuppeteerResults";
-import AxeResults from "../AxeResults/AxeResults";
+import LighthouseResults from "../Results/LighthouseResults";
+import PuppeteerResults from "../Results/PuppeteerResults";
+import AxeResults from "../Results/AxeResults";
 import "./HomePage.css";
 
 import ball from "../../images/ball.png";
@@ -83,17 +83,18 @@ function HomePage() {
             <button className="test-button" type="submit">Run</button>
           </form>
           <img src={girl} alt="girl" className="square__girl" />
-        </div>
-        
-        {loading && <span className="loading">⏳ Analizando...</span>}
-
-        {result && (
+          {loading && <span className="loading">⏳ Analizando...</span>}
+          {result && (
           <div className="results-grid">
             <LighthouseResults data={result.lighthouse} />
             <PuppeteerResults data={result.puppeteer} />
             <AxeResults data={result.axe} />
           </div>
         )}
+        </div>
+        
+        
+
       </section>
       
       <div className="grass-container">

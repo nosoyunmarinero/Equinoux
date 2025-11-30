@@ -1,9 +1,8 @@
-import './AxeResults.css';
+import "./Results.css";
 
 function AxeResults({ data }) {
   if (!data) return null;
 
-  // Agrupar violaciones por impacto
   const violationsByImpact = data.violations.reduce((acc, violation) => {
     const impact = violation.impact || 'unknown';
     if (!acc[impact]) {
@@ -13,48 +12,51 @@ function AxeResults({ data }) {
     return acc;
   }, {});
 
-  // Ordenar por severidad (critical > serious > moderate > minor)
   const impactOrder = ['critical', 'serious', 'moderate', 'minor', 'unknown'];
 
   return (
-    <div className="axe-results">
-      <h2>Axe-core Results</h2>
-      <div className="url-info">
-        <strong>URL:</strong> {data.url}
-      </div>
-      <div className="total-violations">
-        Total violaciones: {data.violations.length}
+    <div className="result-card">
+      <h2 className="result-card__title">♿ Axe-core Results</h2>
+      
+      <div className="result-card__info">
+        <div className="info-item">
+          <span className="info-item__label">URL:</span>
+          <span className="info-item__value">{data.url}</span>
+        </div>
+        <div className="info-item">
+          <span className="info-item__label">Total Violations:</span>
+          <span className="info-item__value">{data.violations.length}</span>
+        </div>
       </div>
       
       {Object.keys(violationsByImpact).length > 0 ? (
-        <div className="violations-container">
-          <h3>Violaciones por Impacto</h3>
+        <div className="result-card__violations">
+          <h3 className="result-card__subtitle">Violations by Impact</h3>
           {impactOrder.map(impact => {
             const violations = violationsByImpact[impact];
             if (!violations || violations.length === 0) return null;
             
             return (
-              <div key={impact} className={`impact-group impact-${impact}`}>
-                <h4>{impact.toUpperCase()} ({violations.length})</h4>
-                <div className="violations-list">
+              <div key={impact} className={`violation-group violation-group--${impact}`}>
+                <h4 className="violation-group__title">
+                  {impact.toUpperCase()} ({violations.length})
+                </h4>
+                <div className="violation-list">
                   {violations.map((violation, index) => (
-                    <div key={index} className={`violation-item violation-${impact}`}>
-                      <div className="violation-title">
-                        {violation.id}
-                      </div>
-                      <div className="violation-description">
+                    <div key={index} className="violation-item">
+                      <div className="violation-item__id">{violation.id}</div>
+                      <div className="violation-item__description">
                         {violation.description}
                       </div>
-                      <div className="violation-help">
-                        <strong>Ayuda:</strong> {violation.help}
+                      <div className="violation-item__help">
+                        <strong>Help:</strong> {violation.help}
                       </div>
                       {violation.nodes && violation.nodes.length > 0 && (
-                        <div className="affected-nodes">
-                          <div className="affected-nodes-count">
-                            Elementos afectados: {violation.nodes.length}
+                        <div className="violation-item__nodes">
+                          <div className="nodes-count">
+                            Affected elements: {violation.nodes.length}
                           </div>
                           {violation.nodes.map((node, nodeIndex) => {
-                            // Intentar obtener el contenido del nodo de diferentes formas
                             let nodeContent = '';
                             
                             if (typeof node === 'string') {
@@ -62,14 +64,18 @@ function AxeResults({ data }) {
                             } else if (node.html) {
                               nodeContent = node.html;
                             } else if (node.target) {
-                              nodeContent = Array.isArray(node.target) ? node.target.join(' > ') : node.target;
+                              nodeContent = Array.isArray(node.target) 
+                                ? node.target.join(' > ') 
+                                : node.target;
                             } else {
                               nodeContent = JSON.stringify(node);
                             }
                             
                             return (
                               <div key={nodeIndex} className="node-preview">
-                                {nodeContent.length > 100 ? nodeContent.substring(0, 100) + '...' : nodeContent}
+                                {nodeContent.length > 100 
+                                  ? nodeContent.substring(0, 100) + '...' 
+                                  : nodeContent}
                               </div>
                             );
                           })}
@@ -83,8 +89,8 @@ function AxeResults({ data }) {
           })}
         </div>
       ) : (
-        <div className="no-violations">
-          No se encontraron violaciones de accesibilidad.
+        <div className="result-card__empty">
+          ✅ No accessibility violations found.
         </div>
       )}
     </div>

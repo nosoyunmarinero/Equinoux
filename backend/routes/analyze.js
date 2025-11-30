@@ -30,20 +30,20 @@ router.post("/", async (req, res) => {
 
     // Función para obtener issues con problemas (score < 1)
     const getIssues = (audits) => {
-      const result = {};
-      for (const [key, audit] of Object.entries(audits)) {
-        // Solo incluir audits con score < 1 (que tienen problemas)
-        if (audit.score !== null && audit.score < 1 && audit.scoreDisplayMode === 'binary') {
-          result[key] = {
-            title: audit.title,
-            description: audit.description,
-            score: audit.score,
-            displayValue: audit.displayValue
-          };
-        }
-      }
-      return result;
-    };
+  const result = {};
+  for (const [key, audit] of Object.entries(audits)) {
+    if (!audit) continue; // 🔹 protege si audit es undefined
+    if (audit.score !== null && audit.score < 1 && audit.scoreDisplayMode === "binary") {
+      result[key] = {
+        title: audit.title,
+        description: audit.description,
+        score: audit.score,
+        displayValue: audit.displayValue,
+      };
+    }
+  }
+  return result;
+};
 
     const issues = {
       accessibility: getIssues({
@@ -65,13 +65,13 @@ router.post("/", async (req, res) => {
 
     // 6. Respondemos con JSON
     res.json({
-      url,
-      performance: report.categories.performance.score,
-      accessibility: report.categories.accessibility.score,
-      seo: report.categories.seo.score,
-      bestPractices: report.categories["best-practices"].score,
-      issues,
-    });
+  url,
+  performance: report.categories?.performance?.score ?? null,
+  accessibility: report.categories?.accessibility?.score ?? null,
+  seo: report.categories?.seo?.score ?? null,
+  bestPractices: report.categories?.["best-practices"]?.score ?? null,
+  issues,
+});
   } catch (error) {
     res.status(500).json({
       error: "Error al ejecutar Lighthouse",

@@ -11,12 +11,20 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    // Llamadas internas a tus endpoints
-    const [lighthouseRes, puppeteerRes, axeRes] = await Promise.all([
-      axios.post("http://localhost:3001/analyze", { url }),
-      axios.post("http://localhost:3001/puppeteer", { url }),
-      axios.post("http://localhost:3001/axe", { url }),
-    ]);
+    // Llamadas INDIVIDUALES para identificar cuál falla
+    console.log("🔍 Iniciando análisis de:", url);
+
+    console.log("⚡ Llamando a Lighthouse...");
+    const lighthouseRes = await axios.post("http://localhost:3001/analyze", { url });
+    console.log("✅ Lighthouse completado");
+
+    console.log("⚡ Llamando a Puppeteer...");
+    const puppeteerRes = await axios.post("http://localhost:3001/puppeteer", { url });
+    console.log("✅ Puppeteer completado");
+
+    console.log("⚡ Llamando a Axe...");
+    const axeRes = await axios.post("http://localhost:3001/axe", { url });
+    console.log("✅ Axe completado");
 
     // Combinar resultados
     res.json({
@@ -26,9 +34,16 @@ router.post("/", async (req, res) => {
       axe: axeRes.data,
     });
   } catch (error) {
+    // Mejor detalle del error
+    console.error("❌ Error en full-analysis:", error.message);
+    console.error("📍 URL que falló:", error.config?.url);
+    console.error("📦 Respuesta del servidor:", error.response?.data);
+    
     res.status(500).json({
       error: "Error en el análisis combinado",
       detalle: error.message,
+      endpointFallido: error.config?.url,
+      errorDelServidor: error.response?.data
     });
   }
 });

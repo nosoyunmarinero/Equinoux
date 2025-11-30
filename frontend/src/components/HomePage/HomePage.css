@@ -9,7 +9,7 @@ background-color: black;
 }
 .main::before {
 content: "";
-position: absolute;
+position: fixed;
 top: 0; left: 0;
  width: 100%; height: 100%;
  background-image: url("../../images/background.jpg");
@@ -20,27 +20,29 @@ top: 0; left: 0;
 }
 
 .square {
-background-color: white;
-height: 80%;
-width: 60%;
-border-radius: 40px;
-/* Fondo semitransparente */
-background: rgba(97, 92, 119, 0.2);
-/* Efecto cristal */
-backdrop-filter: blur(10px);
--webkit-backdrop-filter: blur(15px); /* soporte en Safari */
-/* Opcional: borde suave para resaltar el efecto */
-border: 3px solid rgb(41, 26, 109);
-display: flex;
-justify-content: start;
-align-items: center;
-flex-direction: column;
-/* 👇 centrado en la página */
-position: absolute;top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-/* 👈 separación entre hijos */
+  background-color: white;
+  width: 60%;
+  min-height: 80%; /* 👈 Cambiado de height a min-height */
+  max-height: 90vh; /* 👈 Altura máxima */
+  overflow-y: auto; /* 👈 Scroll interno si crece mucho */
+  border-radius: 40px;
+  background: rgba(97, 92, 119, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 3px solid rgb(41, 26, 109);
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding-bottom: 40px; /* 👈 Espacio para la chica */
+
+  scrollbar-color: rgba(151, 153, 243, 0.6) rgba(255, 255, 255, 0.1);
 }
+
 
 .top{
 background: linear-gradient(
@@ -153,20 +155,27 @@ bottom: 0px; /* 👈 distancia desde el borde inferior */
   margin-right: 5px;
   border-radius: 15px;
   padding: 10px;
+  
   /* Fondo translúcido estilo cristal */
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 
- /* Opcional: borde suave */
+  /* Opcional: borde suave */
   border: 1px solid rgba(255, 255, 255, 0.3);
 
-  color: #000000; /* texto visible */
-   transition: box-shadow 1000ms ease;
-    z-index: 5;
+  color: #ffffff; /* 👈 Cambiar a blanco para que se vea el texto */
+  transition: box-shadow 1000ms ease;
+  z-index: 5;
+  
 }
-.input:hover{
- box-shadow: 0px 0px 25px rgb(221, 223, 236);
+
+.input::placeholder {
+  color: rgba(255, 255, 255, 0.6); /* 👈 Color del placeholder */
+}
+
+.input:hover {
+  box-shadow: 0px 0px 25px rgb(221, 223, 236);
 }
 
 .test-button {
@@ -183,7 +192,7 @@ bottom: 0px; /* 👈 distancia desde el borde inferior */
 
  border: 1px solid rgba(255, 255, 255, 0.3);
 
- color: #000;
+ color: #ffffff;
 
   transition: box-shadow 1000ms ease;
 }
@@ -198,4 +207,27 @@ bottom: 0px; /* 👈 distancia desde el borde inferior */
  left: 0;
  width: 100%;
  z-index: -1;
+}
+
+.loading {
+  color: white;
+  font-size: 24px;
+  margin-top: 30px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+/* 👇 Estilos para la grid de resultados */
+.results-grid {
+  width: 90%;
+  margin-top: 190px;
+  display: flex; /* 👈 Cambio a flex */
+  flex-direction: column; /* 👈 Todo en vertical */
+  gap: 20px;
+  padding: 20px;
+  
+  /* Estilo cristal para los resultados */
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }

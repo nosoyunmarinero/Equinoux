@@ -1,0 +1,297 @@
+/* ============================================
+   RESULTADO CARD - ESTILOS BASE
+   ============================================ */
+
+   .result-card {
+ border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 25px;
+  color: #ffffff;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  transition: transform 300ms ease, box-shadow 300ms ease;
+}
+
+.result-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(151, 153, 243, 0.3);
+}
+
+/* ============================================
+   TÍTULOS
+   ============================================ */
+.result-card__title {
+  font-size: 28px;
+  margin: 0 0 20px 0;
+  color: #ffffff;
+  text-align: center;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 15px;
+}
+
+.result-card__subtitle {
+  font-size: 20px;
+  margin: 20px 0 15px 0;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ============================================
+   SCORES (Lighthouse)
+   ============================================ */
+.result-card__scores {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.score-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  border-left: 4px solid rgba(151, 153, 243, 0.8);
+}
+
+.score-item__label {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.score-item__value {
+  font-size: 18px;
+  font-weight: bold;
+  color: #9799f3;
+}
+
+/* ============================================
+   INFO (Puppeteer & Axe)
+   ============================================ */
+.result-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+}
+
+.info-item__label {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.info-item__value {
+  color: #ffffff;
+  word-break: break-word;
+  text-align: right;
+  max-width: 70%;
+}
+
+/* ============================================
+   ISSUES (Lighthouse)
+   ============================================ */
+.result-card__issues {
+  margin-top: 20px;
+}
+
+.issue-category {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+}
+
+.issue-category__title {
+  font-size: 18px;
+  color: #9799f3;
+  margin: 0 0 10px 0;
+}
+
+.issue-category__empty {
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+  margin: 10px 0;
+}
+
+.issue-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.issue-list__item {
+  padding: 12px;
+  margin-bottom: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  border-left: 3px solid #ff6b6b;
+}
+
+.issue-list__title {
+  display: block;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.issue-list__description {
+  color: rgba(255, 255, 255, 0.8);
+  margin: 5px 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.issue-list__value {
+  display: block;
+  color: #ff6b6b;
+  font-weight: 600;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+/* ============================================
+   VIOLATIONS (Axe)
+   ============================================ */
+.result-card__violations {
+  margin-top: 20px;
+}
+
+.violation-group {
+  margin-bottom: 25px;
+  padding: 15px;
+  border-radius: 12px;
+  border: 2px solid;
+}
+
+.violation-group--critical {
+  background: rgba(255, 0, 0, 0.1);
+  border-color: #ff4444;
+}
+
+.violation-group--serious {
+  background: rgba(255, 140, 0, 0.1);
+  border-color: #ff8c00;
+}
+
+.violation-group--moderate {
+  background: rgba(255, 215, 0, 0.1);
+  border-color: #ffd700;
+}
+
+.violation-group--minor {
+  background: rgba(135, 206, 250, 0.1);
+  border-color: #87ceeb;
+}
+
+.violation-group--unknown {
+  background: rgba(128, 128, 128, 0.1);
+  border-color: #808080;
+}
+
+.violation-group__title {
+  font-size: 18px;
+  margin: 0 0 15px 0;
+  color: #ffffff;
+}
+
+.violation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.violation-item {
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  border-left: 4px solid rgba(151, 153, 243, 0.6);
+}
+
+.violation-item__id {
+  font-weight: bold;
+  color: #9799f3;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.violation-item__description {
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.violation-item__help {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.violation-item__nodes {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nodes-count {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 10px;
+}
+
+.node-preview {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  border-radius: 6px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: #e0e0e0;
+  margin-bottom: 8px;
+  overflow-x: auto;
+  word-break: break-all;
+}
+
+/* ============================================
+   MENSAJE VACÍO
+   ============================================ */
+.result-card__empty {
+  text-align: center;
+  padding: 30px;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  .result-card {
+    padding: 20px;
+  }
+
+  .result-card__title {
+    font-size: 24px;
+  }
+
+  .score-item,
+  .info-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .info-item__value {
+    max-width: 100%;
+    text-align: left;
+  }
+}

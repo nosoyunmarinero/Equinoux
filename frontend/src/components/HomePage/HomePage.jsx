@@ -17,7 +17,7 @@ function HomePage() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-    const audioRef = useRef(null);
+  const audioRef = useRef(null);
 
   const toggleMusic = () => {
     if (audioRef.current) {
@@ -38,7 +38,7 @@ function HomePage() {
       const response = await axios.post("http://localhost:3001/full-analysis", { url });
       setResult(response.data);
     } catch (error) {
-      console.error("Error al llamar al backend:", error);
+      console.error("❌ Error calling backend:", error);
     } finally {
       setLoading(false);
     }
@@ -46,12 +46,12 @@ function HomePage() {
 
   return (
     <>
-    <audio 
+      <audio 
         ref={audioRef}
         src={backgroundMusic}
         loop
         autoPlay
-        style={{ display: 'none' }} // 👈 Oculto completamente
+        style={{ display: 'none' }} // 👈 Completely hidden
       />
       <section className="main">
         <div className="square">
@@ -59,12 +59,14 @@ function HomePage() {
             <img src={browser} alt="browser" className="browser-icon" />
             <div className="header">
               <h1 className="header__heading">Equinox<br/></h1>
-              <h3 className="header__subheading">An App to test your web page</h3>
+              <h3 className="header__subheading">An App to test your website</h3>
             </div>
-            <img  src={ball} 
+            <img  
+              src={ball} 
               alt="music toggle" 
               className={`ball ${isPlaying ? 'ball--playing' : ''}`}
-              onClick={toggleMusic} />
+              onClick={toggleMusic} 
+            />
           </div>
           <div className="square__heading">
             <h2 className="square__heading_text">Enter your URL below</h2>
@@ -74,27 +76,24 @@ function HomePage() {
             <input
               type="url"
               id="url"
-              placeholder="URL"
+              placeholder="Enter a URL"
               className="input"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               required
             />
-            <button className="test-button" type="submit">Run</button>
+            <button className="test-button" type="submit">Run Tests</button>
           </form>
           <img src={girl} alt="girl" className="square__girl" />
-          {loading && <span className="loading">⏳ Analizando...</span>}
+          {loading && <span className="loading">⏳ Analyzing...</span>}
           {result && (
-          <div className="results-grid">
-            <LighthouseResults data={result.lighthouse} />
-            <PuppeteerResults data={result.puppeteer} />
-            <AxeResults data={result.axe} />
-          </div>
-        )}
+            <div className="results-grid">
+              <LighthouseResults data={result.lighthouse} />
+              <PuppeteerResults data={result.puppeteer} />
+              <AxeResults data={result.axe} />
+            </div>
+          )}
         </div>
-        
-        
-
       </section>
       
       <div className="grass-container">

@@ -4,46 +4,40 @@ import lighthouse from "lighthouse";
 
 const router = express.Router();
 
-// Endpoint POST
 router.post("/", async (req, res) => {
   const { url } = req.body;
 
   if (!url) {
-    return res.status(400).json({ error: "Debes enviar una URL en el Body" });
+    return res.status(400).json({ error: "You must provide a URL in the request body" });
   }
 
   try {
-    // 1. Lanzamos Chrome en modo headless
     const chrome = await chromeLauncher.launch({ chromeFlags: ["--headless"] });
-
-    // 2. Configuramos opciones para Lighthouse
     const options = { port: chrome.port, output: "json", logLevel: "info" };
-
-    // 3. Ejecutamos Lighthouse sobre la URL
     const runnerResult = await lighthouse(url, options);
-
-    // 4. Cerramos Chrome
     await chrome.kill();
 
-    // 5. Extraemos resultados principales
     const report = runnerResult.lhr;
 
-    // Función para obtener issues con problemas (score < 1)
     const getIssues = (audits) => {
-  const result = {};
-  for (const [key, audit] of Object.entries(audits)) {
-    if (!audit) continue; // 🔹 protege si audit es undefined
-    if (audit.score !== null && audit.score < 1 && audit.scoreDisplayMode === "binary") {
-      result[key] = {
-        title: audit.title,
-        description: audit.description,
-        score: audit.score,
-        displayValue: audit.displayValue,
-      };
-    }
-  }
-  return result;
-};
+      const result = {};
+      for (const [key, audit] of Object.entries(audits)) {
+        if (!audit) continue;
+        if (
+          audit.score !== null &&
+          audit.score < 1 &&
+          audit.scoreDisplayMode === "binary"
+        ) {
+          result[key] = {
+            title: audit.title,
+            description: audit.description,
+            score: audit.score,
+            displayValue: audit.displayValue,
+          };
+        }
+      }
+      return result;
+    };
 
     const issues = {
       accessibility: getIssues({
@@ -54,8 +48,8 @@ router.post("/", async (req, res) => {
       }),
       seo: getIssues({
         "meta-description": report.audits["meta-description"],
-        "viewport": report.audits["viewport"],
-        "canonical": report.audits["canonical"],
+        viewport: report.audits["viewport"],
+        canonical: report.audits["canonical"],
       }),
       bestPractices: getIssues({
         "uses-https": report.audits["uses-https"],
@@ -63,19 +57,32 @@ router.post("/", async (req, res) => {
       }),
     };
 
-    // 6. Respondemos con JSON
     res.json({
-  url,
-  performance: report.categories?.performance?.score ?? null,
-  accessibility: report.categories?.accessibility?.score ?? null,
-  seo: report.categories?.seo?.score ?? null,
-  bestPractices: report.categories?.["best-practices"]?.score ?? null,
-  issues,
-});
+      url,
+      performance: report.categories?.performance?.score ?? null,
+      accessibility: report.categories?.accessibility?.score ?? null,
+      seo: report.categories?.seo?.score ?? null,
+      bestPractices: report.categories?.["best-practices"]?.score ?? null,
+      issues,
+    });
   } catch (error) {
-    res.status(500).json({
-      error: "Error al ejecutar Lighthouse",
-      detalle: error.message,
+    let userMessage = "Could not run Lighthouse :(.";
+    if (error.message.includes("timeout")) {
+      userMessage = "The page took too long to load and Lighthouse was canceled :(";
+    } else if (error.message.includes("score")) {
+      userMessage = "The Lighthouse report did not return complete data :(";
+    }
+
+    res.json({
+      url,
+      error: true,
+      message: `Lighthouse failed :( : ${error.message}`,
+      userMessage,
+      performance: null,
+      accessibility: null,
+      seo: null,
+      bestPractices: null,
+      issues: {},
     });
   }
 });

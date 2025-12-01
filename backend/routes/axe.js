@@ -8,28 +8,25 @@ router.post("/", async (req, res) => {
   const { url } = req.body;
 
   if (!url) {
-    return res.status(400).json({ error: "Debes enviar una URL en el Body" });
+    return res.status(400).json({ error: "You must provide a URL in the request body" });
   }
 
   try {
-    // 1. Lanzamos navegador
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
     const page = await browser.newPage();
 
-    // 2. Navegamos a la URL
-    await page.goto(url, { waitUntil: "networkidle2" });
-
-    // 3. Inyectamos axe-core en la página
+    await page.goto(url, { waitUntil: "networkidle2", timeout: 30000 });
     await page.addScriptTag({ content: axeCore.source });
 
-    // 4. Ejecutamos auditoría de accesibilidad
     const results = await page.evaluate(async () => {
       return await axe.run();
     });
 
     await browser.close();
 
-    // 5. Respondemos con JSON
     res.json({
       url,
       violations: results.violations.map((v) => ({
@@ -41,9 +38,19 @@ router.post("/", async (req, res) => {
       })),
     });
   } catch (error) {
-    res.status(500).json({
-      error: "Error al ejecutar axe-core",
-      detalle: error.message,
+    let userMessage = "Could not run the accessibility audit :(";
+    if (error.message.includes("net::ERR_CONNECTION_RESET")) {
+      userMessage = "The connection to the page was interrupted during the analysis :c";
+    } else if (error.message.includes("timeout")) {
+      userMessage = "The page took too long to respond and the analysis was canceled Dx";
+    }
+
+    res.json({
+      url,
+      error: true,
+      message: `Axe failed: ${error.message}`,
+      userMessage,
+      violations: [],
     });
   }
 });

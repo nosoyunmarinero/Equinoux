@@ -1,7 +1,23 @@
 import "./Results.css";
+
 function PuppeteerResults({ data }) {
   if (!data) return null;
 
+  // 🔹 Error case
+  if (data.error) {
+    return (
+      <div className="result-card">
+        <h2 className="result-card__title">🎭 Puppeteer Results</h2>
+        <div className="result-card__empty">
+          ⚠️ {data.userMessage || "Could not run Puppeteer :("}
+          <br />
+          <small className="error-detail">{data.message}</small>
+        </div>
+      </div>
+    );
+  }
+
+  // 🔹 Normal case
   return (
     <div className="result-card">
       <h2 className="result-card__title">🎭 Puppeteer Results</h2>

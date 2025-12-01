@@ -3,8 +3,23 @@ import "./Results.css";
 function AxeResults({ data }) {
   if (!data) return null;
 
+  // 🔹 Error case
+  if (data.error) {
+    return (
+      <div className="result-card">
+        <h2 className="result-card__title">♿ Axe-core Results</h2>
+        <div className="result-card__empty">
+          ⚠️ {data.userMessage || "Could not run Axe-core :("}
+          <br />
+          <small className="error-detail">{data.message}</small>
+        </div>
+      </div>
+    );
+  }
+
+  // 🔹 Normal case: process violations
   const violationsByImpact = data.violations.reduce((acc, violation) => {
-    const impact = violation.impact || 'unknown';
+    const impact = violation.impact || "unknown";
     if (!acc[impact]) {
       acc[impact] = [];
     }
@@ -12,12 +27,12 @@ function AxeResults({ data }) {
     return acc;
   }, {});
 
-  const impactOrder = ['critical', 'serious', 'moderate', 'minor', 'unknown'];
+  const impactOrder = ["critical", "serious", "moderate", "minor", "unknown"];
 
   return (
     <div className="result-card">
       <h2 className="result-card__title">♿ Axe-core Results</h2>
-      
+
       <div className="result-card__info">
         <div className="info-item">
           <span className="info-item__label">URL:</span>
@@ -28,16 +43,19 @@ function AxeResults({ data }) {
           <span className="info-item__value">{data.violations.length}</span>
         </div>
       </div>
-      
+
       {Object.keys(violationsByImpact).length > 0 ? (
         <div className="result-card__violations">
           <h3 className="result-card__subtitle">Violations by Impact</h3>
-          {impactOrder.map(impact => {
+          {impactOrder.map((impact) => {
             const violations = violationsByImpact[impact];
             if (!violations || violations.length === 0) return null;
-            
+
             return (
-              <div key={impact} className={`violation-group violation-group--${impact}`}>
+              <div
+                key={impact}
+                className={`violation-group violation-group--${impact}`}
+              >
                 <h4 className="violation-group__title">
                   {impact.toUpperCase()} ({violations.length})
                 </h4>
@@ -57,24 +75,24 @@ function AxeResults({ data }) {
                             Affected elements: {violation.nodes.length}
                           </div>
                           {violation.nodes.map((node, nodeIndex) => {
-                            let nodeContent = '';
-                            
-                            if (typeof node === 'string') {
+                            let nodeContent = "";
+
+                            if (typeof node === "string") {
                               nodeContent = node;
                             } else if (node.html) {
                               nodeContent = node.html;
                             } else if (node.target) {
-                              nodeContent = Array.isArray(node.target) 
-                                ? node.target.join(' > ') 
+                              nodeContent = Array.isArray(node.target)
+                                ? node.target.join(" > ")
                                 : node.target;
                             } else {
                               nodeContent = JSON.stringify(node);
                             }
-                            
+
                             return (
                               <div key={nodeIndex} className="node-preview">
-                                {nodeContent.length > 100 
-                                  ? nodeContent.substring(0, 100) + '...' 
+                                {nodeContent.length > 100
+                                  ? nodeContent.substring(0, 100) + "..."
                                   : nodeContent}
                               </div>
                             );

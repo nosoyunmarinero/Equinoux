@@ -3,6 +3,21 @@ import "./Results.css";
 function LighthouseResults({ data }) {
   if (!data) return null;
 
+  // 🔹 Error case
+  if (data.error) {
+    return (
+      <div className="result-card">
+        <h2 className="result-card__title">⚡ Lighthouse Results</h2>
+        <div className="result-card__empty">
+          ⚠️ {data.userMessage || "Could not run Lighthouse :("}
+          <br />
+          <small className="error-detail">{data.message}</small>
+        </div>
+      </div>
+    );
+  }
+
+  // 🔹 Normal case
   const { performance, accessibility, seo, bestPractices, issues } = data;
 
   return (

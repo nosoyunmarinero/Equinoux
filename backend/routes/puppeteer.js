@@ -3,42 +3,51 @@ import puppeteer from "puppeteer";
 
 const router = express.Router();
 
-// Endpoint POST Puppeteer
 router.post("/", async (req, res) => {
   const { url } = req.body;
 
   if (!url) {
-    return res.status(400).json({ error: "Debes enviar una URL en el Body" });
+    return res.status(400).json({ error: "You must provide a URL in the request body" });
   }
 
   try {
-    // 1. Lanzamos el navegador
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
     const page = await browser.newPage();
 
-    // 2. Medimos tiempo de carga
-    const start = Date.now(); // tiempo inicial
-    await page.goto(url, { waitUntil: "networkidle2" });
-    const end = Date.now(); // tiempo final
+    const start = Date.now();
+    await page.goto(url, { waitUntil: "networkidle2", timeout: 30000 });
+    const end = Date.now();
 
-    const loadTime = end - start; // diferencia en milisegundos
-
-    // 3. Extraemos información
+    const loadTime = end - start;
     const title = await page.title();
 
-    // 4. Cerramos navegador
     await browser.close();
 
-    // 5. Respondemos con JSON
     res.json({
       url,
       title,
       loadTime: `${loadTime} ms`,
     });
   } catch (error) {
-    res.status(500).json({
-      error: "Error al ejecutar Puppeteer",
-      detalle: error.message,
+    let userMessage = "Could not analyze the page with Puppeteer :(";
+    if (error.message.includes("timeout")) {
+      userMessage = "The page took too long to load and the analysis was canceled ):";
+    } else if (error.message.includes("500")) {
+      userMessage = "The page server returned an internal error (500) :(";
+    } else if (error.message.includes("net::ERR_CONNECTION_RESET")) {
+      userMessage = "The connection to the page was interrupted :c";
+    }
+
+    res.json({
+      url,
+      error: true,
+      message: `Puppeteer failed: ${error.message}`,
+      userMessage,
+      title: null,
+      loadTime: null,
     });
   }
 });

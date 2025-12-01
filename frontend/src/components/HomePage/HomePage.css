@@ -201,13 +201,40 @@ bottom: 0px; /* 👈 distancia desde el borde inferior */
  box-shadow: 0px 0px 25px rgb(221, 223, 236);
 }
 
+.restart-container {
+  display: flex;              /* Activa flexbox */
+  justify-content: center;    /* Centra horizontalmente */
+  margin-top: 2rem;           /* Espacio arriba del botón */
+}
+
+/* Estilo del botón */
+.restart-button {
+  padding: 10px 20px;
+ background: rgba(255, 255, 255, 0.2);
+ backdrop-filter: blur(10px);
+ -webkit-backdrop-filter: blur(10px);  /* Verde ejemplo */
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: "Noto Sans", sans-serif;
+  transition: box-shadow 1000ms ease;
+}
+
+.restart-button:hover {
+  box-shadow: 0px 0px 25px rgb(221, 223, 236); 
+}
+
 .grass {
  position: fixed;
- bottom: 0;
+ bottom: -200px; 
  left: 0;
  width: 100%;
  z-index: -1;
 }
+
 
 .loading {
   color: white;
@@ -219,7 +246,7 @@ bottom: 0px; /* 👈 distancia desde el borde inferior */
 /* 👇 Estilos para la grid de resultados */
 .results-grid {
   width: 90%;
-  margin-top: 190px;
+  margin-top: 30px;
   display: flex; /* 👈 Cambio a flex */
   flex-direction: column; /* 👈 Todo en vertical */
   gap: 20px;

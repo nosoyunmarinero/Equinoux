@@ -1,5 +1,4 @@
 import express from "express";
-// 👇 Importa las funciones directamente en lugar de routers HTTP
 import { runAnalysis } from "./analyze.js";
 import { runPuppeteer } from "./puppeteer.js";
 import { runAxe } from "./axe.js";

@@ -29,7 +29,7 @@ app.use(
 
 // Ruta raíz para verificar
 app.get("/", (req, res) => {
-  res.json({ mensaje: "Servidor backend corriendo 🚀", status: "ok" });
+  res.json({ mensaje: "Servidor backend corriendo :D", status: "ok" });
 });
 
 // Importar rutas

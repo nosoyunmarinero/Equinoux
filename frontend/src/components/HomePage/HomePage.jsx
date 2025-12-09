@@ -177,7 +177,7 @@ function HomePage() {
               src={ball} 
               alt="music toggle" 
               className={`ball ${isPlaying ? 'ball--playing' : ''}`}
-              onClick={toggleMusic} 
+              onClick={togglePlayerVisibility} 
             />
           </div>
 

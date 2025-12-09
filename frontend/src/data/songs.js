@@ -13,7 +13,7 @@ const songs = [
     artist: "oxygenetiX",
     file: song1,
     thumbnail: thumb1,
-    Link: "https://www.youtube.com/watch?v=xYEzrr_P5hQ"
+    link: "https://www.youtube.com/watch?v=xYEzrr_P5hQ"
   },
 ];
 

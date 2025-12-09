@@ -8,6 +8,8 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write   # 👈 esto da permiso de escritura al bot
 
     steps:
       # 1. Descargar el código

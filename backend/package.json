@@ -1,0 +1,19 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend API for Equinoux",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "axe-core": "^4.11.0",
+    "axios": "^1.13.2",
+    "chrome-launcher": "^1.2.1",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "lighthouse": "^13.0.1",
+    "puppeteer": "^24.30.0"
+  }
+}

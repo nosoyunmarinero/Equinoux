@@ -79,31 +79,42 @@ function HomePage() {
 
   // 🔹 Siguiente canción
   const handleNext = () => {
-    const nextIndex = (currentSongIndex + 1) % songs.length;
-    setCurrentSongIndex(nextIndex);
-    setCurrentTime(0);
-    
-    if (audioRef.current) {
-      audioRef.current.src = songs[nextIndex].file;
+  const nextIndex = (currentSongIndex + 1) % songs.length;
+  setCurrentSongIndex(nextIndex);
+  setCurrentTime(0);
+
+  if (audioRef.current) {
+    const audio = audioRef.current;
+    audio.src = songs[nextIndex].file;
+    audio.load();
+
+    // 👇 Espera a que el navegador cargue datos antes de reproducir
+    audio.onloadeddata = () => {
       if (isPlaying) {
-        audioRef.current.play();
+        audio.play().catch(err => console.log("Play interrupted:", err));
       }
-    }
-  };
+    };
+  }
+};
 
   // 🔹 Canción anterior (nuevo)
-  const handlePrevious = () => {
-    const prevIndex = currentSongIndex === 0 ? songs.length - 1 : currentSongIndex - 1;
-    setCurrentSongIndex(prevIndex);
-    setCurrentTime(0);
-    
-    if (audioRef.current) {
-      audioRef.current.src = songs[prevIndex].file;
+ const handlePrevious = () => {
+  const prevIndex = currentSongIndex === 0 ? songs.length - 1 : currentSongIndex - 1;
+  setCurrentSongIndex(prevIndex);
+  setCurrentTime(0);
+
+  if (audioRef.current) {
+    const audio = audioRef.current;
+    audio.src = songs[prevIndex].file;
+    audio.load();
+
+    audio.onloadeddata = () => {
       if (isPlaying) {
-        audioRef.current.play();
+        audio.play().catch(err => console.log("Play interrupted:", err));
       }
-    }
-  };
+    };
+  }
+};
 
   // 🔹 Cambia a la siguiente canción cuando termine
   const handleSongEnd = () => {

@@ -1,4 +1,4 @@
-name: Deploy Vite app to GH Pages
+name: Deploy Vite frontend to GH Pages
 
 on:
   push:
@@ -10,22 +10,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Descargar el código
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # 2. Configurar Node (Vite 7 requiere Node 20+)
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
 
+      # 3. Instalar dependencias
       - name: Install dependencies
         run: npm install
+        working-directory: ./frontend
 
+      # 4. Construir el proyecto
       - name: Build project
         run: npm run build
+        working-directory: ./frontend
 
+      # 5. Desplegar en GH Pages
       - name: Deploy to GH Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./frontend/dist

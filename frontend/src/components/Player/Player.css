@@ -1,0 +1,418 @@
+/* ============================================
+   MUSIC PLAYER
+   ============================================ */
+.player {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  animation: slideIn 0.5s ease-out;
+}
+
+/* Animación de entrada */
+@keyframes slideIn {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Animación de salida */
+.player--closing {
+  animation: slideOut 0.5s ease-out forwards;
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+}
+
+.player__display {
+  background: rgba(97, 92, 119, 0.3);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 2px solid rgba(151, 153, 243, 0.4);
+  border-radius: 20px;
+  padding: 15px 20px;
+  min-width: 300px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 300ms ease;
+  position: relative;
+}
+
+.player__display:hover {
+  border-color: rgba(151, 153, 243, 0.8);
+  box-shadow: 0 8px 32px rgba(151, 153, 243, 0.3);
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   BOTÓN DE CERRAR
+   ============================================ */
+.player__close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 16px;
+  transition: all 300ms ease;
+  padding: 0;
+  line-height: 1;
+}
+
+.player__close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transform: rotate(90deg);
+}
+
+.player__song-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+/* ============================================
+   THUMBNAIL
+   ============================================ */
+.player__thumbnail {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.player__thumbnail-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.player__text {
+  flex: 1;
+  overflow: hidden;
+}
+
+.player__label {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Courier New', monospace;
+}
+
+.player__song-name {
+  font-size: 14px;
+  color: #ffffff;
+  margin: 2px 0 0 0;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player__artist {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 2px 0 4px 0;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============================================
+   EXTERNAL LINK
+   ============================================ */
+.player__external-link {
+  display: inline-block;
+  font-size: 10px;
+  color: #9799f3;
+  text-decoration: none;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.5px;
+  transition: all 300ms ease;
+  padding: 2px 0;
+}
+
+.player__external-link:hover {
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(151, 153, 243, 0.8);
+}
+
+/* ============================================
+   PROGRESS BAR
+   ============================================ */
+.player__progress-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.player__time {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Courier New', monospace;
+  min-width: 35px;
+}
+
+.player__progress-bar {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.player__progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, #9799f3, #ffffff);
+  border-radius: 3px;
+  transition: width 0.1s linear;
+}
+
+/* ============================================
+   CONTROLS
+   ============================================ */
+.player__controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.player__control-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 300ms ease;
+}
+
+/* Botón principal (play/pause) más grande */
+.player__control-btn--main {
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
+  background: rgba(151, 153, 243, 0.3);
+  border-color: rgba(151, 153, 243, 0.5);
+}
+
+.player__control-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(151, 153, 243, 0.5);
+}
+
+.player__control-btn--main:hover {
+  background: rgba(151, 153, 243, 0.5);
+  box-shadow: 0 0 20px rgba(151, 153, 243, 0.7);
+}
+
+.player__control-btn:active {
+  transform: scale(0.95);
+}
+
+/* ============================================
+   VISUALIZER (Barras animadas)
+   ============================================ */
+.player__visualizer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+  height: 30px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.bar {
+  width: 4px;
+  background: linear-gradient(to top, #9799f3, #ffffff);
+  border-radius: 2px;
+  animation: bounce-bar 0.8s ease-in-out infinite;
+}
+
+.bar:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.bar:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.bar:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.bar:nth-child(4) {
+  animation-delay: 0.6s;
+}
+
+@keyframes bounce-bar {
+  0%, 100% {
+    height: 8px;
+  }
+  50% {
+    height: 25px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  .player {
+    bottom: 15px;
+    right: 15px;
+  }
+
+  .player__display {
+    min-width: 270px;
+    padding: 12px 16px;
+  }
+
+  .player__thumbnail {
+    width: 55px;
+    height: 55px;
+  }
+
+  .player__icon-overlay {
+    font-size: 22px;
+  }
+
+  .player__song-name {
+    font-size: 13px;
+  }
+
+  .player__control-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .player__control-btn--main {
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .player {
+    bottom: 80px;
+    right: 10px;
+    left: 10px;
+  }
+
+  .player__display {
+    min-width: auto;
+    padding: 10px 14px;
+  }
+
+  .player__thumbnail {
+    width: 50px;
+    height: 50px;
+  }
+
+  .player__icon-overlay {
+    font-size: 20px;
+  }
+
+  .player__label {
+    font-size: 9px;
+  }
+
+  .player__song-name {
+    font-size: 12px;
+  }
+
+  .player__artist {
+    font-size: 10px;
+  }
+
+  .player__external-link {
+    font-size: 9px;
+  }
+
+  .player__time {
+    font-size: 9px;
+    min-width: 30px;
+  }
+
+  .player__progress-bar {
+    height: 5px;
+  }
+
+  .player__control-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+  }
+
+  .player__control-btn--main {
+    width: 42px;
+    height: 42px;
+    font-size: 16px;
+  }
+
+  .player__visualizer {
+    height: 25px;
+  }
+
+  .bar {
+    width: 3px;
+  }
+
+  .player__close-btn {
+    width: 22px;
+    height: 22px;
+    font-size: 14px;
+  }
+}

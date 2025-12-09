@@ -2,14 +2,17 @@
    RESULTADO CARD - ESTILOS BASE
    ============================================ */
 
-   .result-card {
- border: 1px solid rgba(255, 255, 255, 0.3);
+.result-card {
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 20px;
   padding: 25px;
   color: #ffffff;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   transition: transform 300ms ease, box-shadow 300ms ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 2px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .result-card:hover {
@@ -28,12 +31,14 @@
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   border-bottom: 2px solid rgba(255, 255, 255, 0.2);
   padding-bottom: 15px;
+  word-wrap: break-word;
 }
 
 .result-card__subtitle {
   font-size: 20px;
   margin: 20px 0 15px 0;
   color: rgba(255, 255, 255, 0.9);
+  word-wrap: break-word;
 }
 
 /* ============================================
@@ -59,12 +64,16 @@
 .score-item__label {
   font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
+  word-wrap: break-word;
+  flex: 1;
 }
 
 .score-item__value {
   font-size: 18px;
   font-weight: bold;
   color: #9799f3;
+  margin-left: 10px;
+  white-space: nowrap;
 }
 
 /* ============================================
@@ -82,16 +91,20 @@
   padding: 10px 15px;
   background: rgba(255, 255, 255, 0.08);
   border-radius: 8px;
+  gap: 10px;
 }
 
 .info-item__label {
   font-weight: 600;
   color: rgba(255, 255, 255, 0.8);
+  word-wrap: break-word;
+  flex-shrink: 0;
 }
 
 .info-item__value {
   color: #ffffff;
   word-break: break-word;
+  overflow-wrap: break-word;
   text-align: right;
   max-width: 70%;
 }
@@ -114,6 +127,7 @@
   font-size: 18px;
   color: #9799f3;
   margin: 0 0 10px 0;
+  word-wrap: break-word;
 }
 
 .issue-category__empty {
@@ -134,12 +148,14 @@
   background: rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   border-left: 3px solid #ff6b6b;
+  word-wrap: break-word;
 }
 
 .issue-list__title {
   display: block;
   color: #ffffff;
   margin-bottom: 8px;
+  word-wrap: break-word;
 }
 
 .issue-list__description {
@@ -147,6 +163,7 @@
   margin: 5px 0;
   font-size: 14px;
   line-height: 1.5;
+  word-wrap: break-word;
 }
 
 .issue-list__value {
@@ -155,6 +172,7 @@
   font-weight: 600;
   margin-top: 8px;
   font-size: 14px;
+  word-wrap: break-word;
 }
 
 /* ============================================
@@ -200,6 +218,7 @@
   font-size: 18px;
   margin: 0 0 15px 0;
   color: #ffffff;
+  word-wrap: break-word;
 }
 
 .violation-list {
@@ -220,18 +239,21 @@
   color: #9799f3;
   margin-bottom: 8px;
   font-size: 16px;
+  word-wrap: break-word;
 }
 
 .violation-item__description {
   color: rgba(255, 255, 255, 0.85);
   margin-bottom: 10px;
   line-height: 1.5;
+  word-wrap: break-word;
 }
 
 .violation-item__help {
   color: rgba(255, 255, 255, 0.75);
   font-size: 14px;
   margin-bottom: 12px;
+  word-wrap: break-word;
 }
 
 .violation-item__nodes {
@@ -256,6 +278,8 @@
   margin-bottom: 8px;
   overflow-x: auto;
   word-break: break-all;
+  white-space: pre-wrap;
+  max-width: 100%;
 }
 
 /* ============================================
@@ -272,15 +296,21 @@
 }
 
 /* ============================================
-   RESPONSIVE
+   RESPONSIVE - TABLETS
    ============================================ */
 @media (max-width: 768px) {
   .result-card {
-    padding: 20px;
+    padding: 18px;
+    letter-spacing: 1.5px;
   }
 
   .result-card__title {
-    font-size: 24px;
+    font-size: 22px;
+    padding-bottom: 12px;
+  }
+
+  .result-card__subtitle {
+    font-size: 18px;
   }
 
   .score-item,
@@ -288,10 +318,119 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .score-item__value {
+    margin-left: 0;
   }
 
   .info-item__value {
     max-width: 100%;
     text-align: left;
+  }
+
+  .issue-category__title,
+  .violation-group__title {
+    font-size: 16px;
+  }
+
+  .violation-item__id {
+    font-size: 14px;
+  }
+
+  .issue-list__description,
+  .violation-item__help {
+    font-size: 13px;
+  }
+
+  .node-preview {
+    font-size: 11px;
+    padding: 8px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - MÓVILES
+   ============================================ */
+@media (max-width: 480px) {
+  .result-card {
+    padding: 15px;
+    letter-spacing: 1px;
+    border-radius: 15px;
+  }
+
+  .result-card__title {
+    font-size: 18px;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+  }
+
+  .result-card__subtitle {
+    font-size: 16px;
+    margin: 15px 0 12px 0;
+  }
+
+  .score-item,
+  .info-item {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  .score-item__label,
+  .info-item__label {
+    font-size: 13px;
+  }
+
+  .score-item__value {
+    font-size: 16px;
+  }
+
+  .issue-category,
+  .violation-group {
+    padding: 12px;
+    margin-bottom: 15px;
+  }
+
+  .issue-category__title,
+  .violation-group__title {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
+  .issue-list__item,
+  .violation-item {
+    padding: 10px;
+    margin-bottom: 8px;
+  }
+
+  .issue-list__title,
+  .violation-item__id {
+    font-size: 13px;
+  }
+
+  .issue-list__description,
+  .violation-item__description,
+  .violation-item__help {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .issue-list__value {
+    font-size: 12px;
+  }
+
+  .node-preview {
+    font-size: 10px;
+    padding: 6px;
+  }
+
+  .result-card__empty {
+    padding: 20px;
+    font-size: 15px;
+  }
+
+  .nodes-count {
+    font-size: 13px;
   }
 }

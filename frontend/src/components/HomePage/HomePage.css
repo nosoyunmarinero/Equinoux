@@ -2,11 +2,14 @@ html, body {
 height: 100%;
  margin: 0;
 }
+
 body {
-font-family: "Segoe UI Semilight", Tahoma, Geneva, Verdana, sans-serif, Arial,
-Helvetica, sans-serif;
+font-family: 'Courier New', monospace;
+text-transform: uppercase;
 background-color: black;
+letter-spacing: 5px;
 }
+
 .main::before {
 content: "";
 position: fixed;
@@ -22,9 +25,9 @@ top: 0; left: 0;
 .square {
   background-color: white;
   width: 60%;
-  min-height: 80%; /* 👈 Cambiado de height a min-height */
-  max-height: 90vh; /* 👈 Altura máxima */
-  overflow-y: auto; /* 👈 Scroll interno si crece mucho */
+  min-height: 80%;
+  max-height: 90vh;
+  overflow-y: auto;
   border-radius: 40px;
   background: rgba(97, 92, 119, 0.2);
   backdrop-filter: blur(10px);
@@ -38,17 +41,15 @@ top: 0; left: 0;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding-bottom: 40px; /* 👈 Espacio para la chica */
-
+  padding-bottom: 40px;
   scrollbar-color: rgba(151, 153, 243, 0.6) rgba(255, 255, 255, 0.1);
 }
-
 
 .top{
 background: linear-gradient(
 to bottom,
- rgba(151, 153, 243, 0.4), /* blanco translúcido arriba */
-rgba(41, 26, 109, 0.9) /* tu color base abajo */
+ rgba(151, 153, 243, 0.4),
+rgba(41, 26, 109, 0.9)
 );
 width: 100%;
 height: 120px;
@@ -57,9 +58,12 @@ border-top-right-radius: 37px;
 border-bottom: 2px solid rgb(5, 12, 36);
 display: flex;
 align-items: center; 
- justify-content: space-between; /* 👈 Distribuye el espacio */
-  padding: 0 15px; /* 👈 Padding lateral */
+ justify-content: space-between;
+  padding: 0 15px;
+  position: relative;
+  z-index: 10;
 }
+
 .browser-icon {
 margin: 15px;
 opacity: 0.7;
@@ -73,8 +77,8 @@ text-align: center;
 .header__heading {
 font-size: 40px;
  margin: 0;
- 
 }
+
 .header__subheading {
 margin-top: 10px;
 }
@@ -82,6 +86,7 @@ margin-top: 10px;
 .audio-hidden {
   display: none;
 }
+
 .ball {
 max-width: 100px;
 opacity: 0.7;
@@ -95,27 +100,39 @@ cursor: pointer;
   filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
 }
 
-/* Animación cuando está reproduciendo */
 .ball--playing {
-  animation: bounce 1s ease-in-out infinite;
-  opacity: 1;
-  filter: drop-shadow(0 0 15px rgba(151, 153, 243, 0.8));
+  opacity: 2;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    opacity: 0.7;
+    transform: scale(1);
+    filter: drop-shadow(0 0 0px rgba(255, 255, 255, 0));
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+  }
 }
 
 .square__girl{
  max-width: 200px;
 margin-left: 850px;
 position: absolute;
-bottom: 0px; /* 👈 distancia desde el borde inferior */
+bottom: 0px;
  right: 0px;
  opacity: 0.8;
 }
 
-
 .square__heading{
  margin: 0;
  padding: 20px;
+ text-align: center;
 }
+
 .square__heading_text {
  margin: 0;
  color: #ffffff85;
@@ -127,27 +144,24 @@ bottom: 0px; /* 👈 distancia desde el borde inferior */
  z-index: -1;
  border: 4px solid rgba(41, 26, 109, 0.9);
  margin-top: 20px;
- /* 👇 animación infinita */
- animation: glowPulse 4s ease-in-out infinite;
+ animation: glowPulse2 4s ease-in-out infinite;
 }
 
-/* Definición de la animación */
-@keyframes glowPulse {
+@keyframes glowPulse2 {
  0% {
-  box-shadow: none; /* sin sombra */
+  box-shadow: none;
  }
  50% {
-  box-shadow: 0px 0px 25px rgb(236, 239, 255); /* sombra activa */
+  box-shadow: 0px 0px 25px rgb(236, 239, 255);
  }
  100% {
-  box-shadow: none; /* vuelve a apagarse */
+  box-shadow: none;
  }
 }
 
 .form {
   display: flex;
   margin-top: 20px;
- 
 }
 
 .input {
@@ -155,23 +169,17 @@ bottom: 0px; /* 👈 distancia desde el borde inferior */
   margin-right: 5px;
   border-radius: 15px;
   padding: 10px;
-  
-  /* Fondo translúcido estilo cristal */
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-
-  /* Opcional: borde suave */
   border: 1px solid rgba(255, 255, 255, 0.3);
-
-  color: #ffffff; /* 👈 Cambiar a blanco para que se vea el texto */
+  color: #ffffff;
   transition: box-shadow 1000ms ease;
   z-index: 5;
-  
 }
 
 .input::placeholder {
-  color: rgba(255, 255, 255, 0.6); /* 👈 Color del placeholder */
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .input:hover {
@@ -179,21 +187,17 @@ bottom: 0px; /* 👈 distancia desde el borde inferior */
 }
 
 .test-button {
+  font-family: 'Courier New', monospace;
  border-radius: 15px;
- font-family: "Noto Sans", sans-serif;
- font-size: 30px;
+ font-size: 20px;
  cursor: pointer;
  padding-left: 25px;
  padding-right: 25px;
-
  background: rgba(255, 255, 255, 0.2);
  backdrop-filter: blur(10px);
  -webkit-backdrop-filter: blur(10px);
-
  border: 1px solid rgba(255, 255, 255, 0.3);
-
  color: #ffffff;
-
   transition: box-shadow 1000ms ease;
 }
 
@@ -202,24 +206,23 @@ bottom: 0px; /* 👈 distancia desde el borde inferior */
 }
 
 .restart-container {
-  display: flex;              /* Activa flexbox */
-  justify-content: center;    /* Centra horizontalmente */
-  margin-top: 2rem;           /* Espacio arriba del botón */
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
 }
 
-/* Estilo del botón */
 .restart-button {
   padding: 10px 20px;
  background: rgba(255, 255, 255, 0.2);
  backdrop-filter: blur(10px);
- -webkit-backdrop-filter: blur(10px);  /* Verde ejemplo */
+ -webkit-backdrop-filter: blur(10px);
   color: white;
   border: none;
   border-radius: 20px;
   cursor: pointer;
   font-size: 20px;
-  font-weight: bold;
-  font-family: "Noto Sans", sans-serif;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 3px;
   transition: box-shadow 1000ms ease;
 }
 
@@ -235,7 +238,6 @@ bottom: 0px; /* 👈 distancia desde el borde inferior */
  z-index: -1;
 }
 
-
 .loading {
   color: white;
   font-size: 24px;
@@ -243,18 +245,285 @@ bottom: 0px; /* 👈 distancia desde el borde inferior */
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
-/* 👇 Estilos para la grid de resultados */
 .results-grid {
   width: 90%;
   margin-top: 30px;
-  display: flex; /* 👈 Cambio a flex */
-  flex-direction: column; /* 👈 Todo en vertical */
+  display: flex;
+  flex-direction: column;
   gap: 20px;
   padding: 20px;
-  
-  /* Estilo cristal para los resultados */
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(5px);
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  z-index: 100;
+}
+
+.footer__credit {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: 1px;
+}
+
+.footer__link {
+  color: #9799f3;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 300ms ease;
+  position: relative;
+}
+
+.footer__link:hover {
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(151, 153, 243, 0.8);
+}
+
+.footer__link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #9799f3;
+  transition: width 300ms ease;
+}
+
+.footer__link:hover::after {
+  width: 100%;
+}
+
+.footer__support-btn {
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  color: #ffffff;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 300ms ease;
+  text-transform: uppercase;
+}
+
+.footer__support-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0px 0px 20px rgba(255, 107, 107, 0.6);
+  transform: scale(1.05);
+}
+
+/* ============================================
+   FOOTER RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  .footer {
+    bottom: 15px;
+    left: 15px;
+  }
+
+  .footer__credit {
+    font-size: 12px;
+  }
+
+  .footer__support-btn {
+    font-size: 12px;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    align-items: center;
+  }
+
+  .footer__credit {
+    font-size: 11px;
+    text-align: center;
+  }
+
+  .footer__support-btn {
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+}
+
+/* 📱 RESPONSIVE PARA TABLETS (768px o menos) */
+@media (max-width: 768px) {
+  body {
+    letter-spacing: 3px;
+  }
+
+  .square {
+    width: 85%;
+    min-height: 85%;
+    border-radius: 30px;
+    padding-bottom: 20px;
+  }
+
+  .top {
+    height: 100px;
+    padding: 0 10px;
+  }
+
+  .browser-icon {
+    max-width: 60px;
+    margin: 10px;
+  }
+
+  .ball {
+    max-width: 70px;
+  }
+
+  .header__heading {
+    font-size: 30px;
+  }
+
+  .header__subheading {
+    font-size: 12px;
+  }
+
+  .square__heading_text {
+    font-size: 35px;
+  }
+
+  .square__heading_background {
+    max-width: 400px;
+  }
+
+  .form {
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+  }
+
+  .input {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .test-button {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .square__girl {
+    max-width: 150px;
+    margin-left: 0;
+  }
+
+  .results-grid {
+    width: 95%;
+    padding: 15px;
+  }
+}
+
+/* 📱 RESPONSIVE PARA MÓVILES (480px o menos) */
+@media (max-width: 480px) {
+  body {
+    letter-spacing: 2px;
+  }
+
+  .square {
+    width: 95%;
+    min-height: 90%;
+    border-radius: 20px;
+    padding-bottom: 15px;
+  }
+
+  .top {
+    height: 80px;
+    padding: 0 8px;
+    border-top-left-radius: 17px;
+    border-top-right-radius: 17px;
+  }
+
+  .browser-icon {
+    max-width: 40px;
+    margin: 8px;
+  }
+
+  .ball {
+    max-width: 50px;
+  }
+
+  .header__heading {
+    font-size: 20px;
+  }
+
+  .header__subheading {
+    font-size: 10px;
+    margin-top: 5px;
+  }
+
+  .square__heading {
+    padding: 15px;
+  }
+
+  .square__heading_text {
+    font-size: 24px;
+  }
+
+  .square__heading_background {
+    max-width: 280px;
+    margin-top: 15px;
+  }
+
+  .form {
+    width: 95%;
+    margin-top: 15px;
+  }
+
+  .input {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .test-button {
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  .square__girl {
+    max-width: 100px;
+    bottom: 5px;
+    right: 5px;
+  }
+
+  .restart-button {
+    font-size: 16px;
+    padding: 8px 15px;
+    letter-spacing: 2px;
+  }
+
+  .results-grid {
+    width: 98%;
+    padding: 10px;
+    margin-top: 20px;
+  }
+
+  .grass {
+    bottom: -150px;
+  }
 }

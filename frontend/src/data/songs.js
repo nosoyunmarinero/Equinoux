@@ -1,15 +1,15 @@
 // songs.js
-import song1 from "../audio/song1.mp3"
-import song2 from "../audio/song2.mp3"
+import song1 from "../audio/song1.mp3";
+import song2 from "../audio/song2.mp3";
+import song3 from "../audio/song3.mp3";
 
-//thumbs
+// thumbs
 import thumb1 from "../images/thumbs/thumb1.jpg";
 import thumb2 from "../images/thumbs/thumb2.jpg";
-
+import thumb3 from "../images/thumbs/thumb3.jpg";
 
 const songs = [
   {
-    id: 1,
     name: "Reprocity",
     artist: "oxygenetiX",
     file: song1,
@@ -17,12 +17,18 @@ const songs = [
     link: "https://www.youtube.com/watch?v=xYEzrr_P5hQ"
   },
   {
-    id: 2,
     name: "Rolling Girl",
     artist: "Wowaka ft. Hatsune Miku",
     file: song2,
     thumbnail: thumb2,
     link: "https://youtu.be/vnw8zURAxkU?si=PoEliYYANJxsm9xm"
+  },
+  {
+    name: "18 (Nightcore)",
+    artist: "Code Red",
+    file: song3,
+    thumbnail: thumb3,
+    link: "https://youtu.be/Cl87IeQdwU8?si=6SbxcvPiJ_n2J8hS"
   },
 ];
 

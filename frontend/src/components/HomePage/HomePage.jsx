@@ -22,12 +22,23 @@ function HomePage() {
   const [result, setResult] = useState(null);
   const [view, setView] = useState("form");
   const [isPlaying, setIsPlaying] = useState(false);
-  const [showPlayer, setShowPlayer] = useState(false); // 👈 Nuevo - controla visibilidad
-  const [isClosing, setIsClosing] = useState(false); // 👈 Nuevo - animación de cierre
+  const [showPlayer, setShowPlayer] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioRef = useRef(null);
+
+  // 🔹 Al cargar la página, elegir canción aleatoria
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * songs.length);
+    setCurrentSongIndex(randomIndex);
+
+    if (audioRef.current) {
+      audioRef.current.src = songs[randomIndex].file;
+      audioRef.current.load();
+    }
+  }, []);
 
   // 🔹 Actualiza el tiempo actual y duración
   useEffect(() => {
@@ -37,31 +48,64 @@ function HomePage() {
     const updateTime = () => setCurrentTime(audio.currentTime);
     const updateDuration = () => setDuration(audio.duration);
 
-    audio.addEventListener('timeupdate', updateTime);
-    audio.addEventListener('loadedmetadata', updateDuration);
+    audio.addEventListener("timeupdate", updateTime);
+    audio.addEventListener("loadedmetadata", updateDuration);
 
     return () => {
-      audio.removeEventListener('timeupdate', updateTime);
-      audio.removeEventListener('loadedmetadata', updateDuration);
+      audio.removeEventListener("timeupdate", updateTime);
+      audio.removeEventListener("loadedmetadata", updateDuration);
     };
   }, []);
 
-  // 🔹 Toggle del player con animación
-  const togglePlayerVisibility = () => {
-    if (showPlayer) {
-      // Cerrar con animación
-      setIsClosing(true);
-      setTimeout(() => {
-        setShowPlayer(false);
-        setIsClosing(false);
-      }, 500); // Duración de la animación slideOut
-    } else {
-      // Abrir
-      setShowPlayer(true);
+  // 🔹 Función para reproducir canción aleatoria
+  const playRandomSong = (autoPlay = false) => {
+  let randomIndex = Math.floor(Math.random() * songs.length);
+
+  // Evita repetir la misma canción dos veces seguidas
+  while (randomIndex === currentSongIndex && songs.length > 1) {
+    randomIndex = Math.floor(Math.random() * songs.length);
+  }
+
+  setCurrentSongIndex(randomIndex);
+  setCurrentTime(0);
+
+  const audio = audioRef.current;
+  if (!audio) return;
+
+  audio.src = songs[randomIndex].file;
+  audio.load();
+
+  // Usar canplay para garantizar que el navegador pueda iniciar
+  const onCanPlay = () => {
+    audio.removeEventListener("canplay", onCanPlay);
+    if (autoPlay || isPlaying) {
+      audio.play().catch((err) => console.log("Play interrupted:", err));
     }
   };
+  audio.addEventListener("canplay", onCanPlay);
+};
 
-  // 🔹 Alterna play/pause (modificado)
+  // 🔹 Toggle del ball: abre/cierra + play/pause aleatorio
+  const toggleBall = () => {
+  if (showPlayer) {
+    // Cerrar y pausar
+    if (audioRef.current && isPlaying) {
+      audioRef.current.pause();
+    }
+    setIsPlaying(false);
+    setIsClosing(true);
+    setTimeout(() => {
+      setShowPlayer(false);
+      setIsClosing(false);
+    }, 500);
+  } else {
+    // Abrir y reproducir una aleatoria de inmediato
+    setIsPlaying(true);       // 👈 Primero marcamos reproducción
+    setShowPlayer(true);
+    playRandomSong(true);     // 👈 autoPlay activa la reproducción inmediata
+  }
+};
+  // 🔹 Alterna play/pause dentro del Player
   const toggleMusic = () => {
     if (audioRef.current) {
       if (isPlaying) {
@@ -71,54 +115,25 @@ function HomePage() {
         audioRef.current.play();
         setIsPlaying(true);
         if (!showPlayer) {
-          setShowPlayer(true); // 👈 Abre el player la primera vez que se reproduce
+          setShowPlayer(true);
         }
       }
     }
   };
 
-  // 🔹 Siguiente canción
+  // 🔹 Siguiente canción → aleatoria
   const handleNext = () => {
-  const nextIndex = (currentSongIndex + 1) % songs.length;
-  setCurrentSongIndex(nextIndex);
-  setCurrentTime(0);
+    playRandomSong();
+  };
 
-  if (audioRef.current) {
-    const audio = audioRef.current;
-    audio.src = songs[nextIndex].file;
-    audio.load();
+  // 🔹 Canción anterior → aleatoria
+  const handlePrevious = () => {
+    playRandomSong();
+  };
 
-    // 👇 Espera a que el navegador cargue datos antes de reproducir
-    audio.onloadeddata = () => {
-      if (isPlaying) {
-        audio.play().catch(err => console.log("Play interrupted:", err));
-      }
-    };
-  }
-};
-
-  // 🔹 Canción anterior (nuevo)
- const handlePrevious = () => {
-  const prevIndex = currentSongIndex === 0 ? songs.length - 1 : currentSongIndex - 1;
-  setCurrentSongIndex(prevIndex);
-  setCurrentTime(0);
-
-  if (audioRef.current) {
-    const audio = audioRef.current;
-    audio.src = songs[prevIndex].file;
-    audio.load();
-
-    audio.onloadeddata = () => {
-      if (isPlaying) {
-        audio.play().catch(err => console.log("Play interrupted:", err));
-      }
-    };
-  }
-};
-
-  // 🔹 Cambia a la siguiente canción cuando termine
+  // 🔹 Cuando termina una canción → pasa a otra aleatoria
   const handleSongEnd = () => {
-    handleNext();
+    playRandomSong();
   };
 
   // 🔹 Seek - Cambia la posición de la canción
@@ -127,7 +142,7 @@ function HomePage() {
     const clickX = e.nativeEvent.offsetX;
     const width = progressBar.offsetWidth;
     const newTime = (clickX / width) * duration;
-    
+
     if (audioRef.current) {
       audioRef.current.currentTime = newTime;
       setCurrentTime(newTime);
@@ -158,8 +173,8 @@ function HomePage() {
 
   // 🔹 Array con las 3 imágenes
   const girlImages = [girl, girl2, girl3];
-  
-  // 🔹 Elige una imagen aleatoria al cargar (solo se ejecuta una vez)
+
+  // 🔹 Elige una imagen aleatoria al cargar
   const randomGirl = useMemo(() => {
     return girlImages[Math.floor(Math.random() * girlImages.length)];
   }, []);
@@ -167,12 +182,12 @@ function HomePage() {
   return (
     <>
       {/* 🔹 Audio de fondo */}
-      <audio 
+      <audio
         ref={audioRef}
         src={songs[currentSongIndex].file}
         loop={false}
         onEnded={handleSongEnd}
-        style={{ display: 'none' }}
+        style={{ display: "none" }}
       />
 
       <section className="main">
@@ -181,14 +196,14 @@ function HomePage() {
           <div className="top">
             <img src={browser} alt="browser" className="browser-icon" />
             <div className="header">
-              <h1 className="header__heading">Equinoux<br/></h1>
+              <h1 className="header__heading">Equinoux<br /></h1>
               <h3 className="header__subheading">An App to test your website</h3>
             </div>
-            <img  
-              src={ball} 
-              alt="music toggle" 
-              className={`ball ${isPlaying ? 'ball--playing' : ''}`}
-              onClick={togglePlayerVisibility} 
+            <img
+              src={ball}
+              alt="music toggle"
+              className={`ball ${isPlaying ? "ball--playing" : ""}`}
+              onClick={toggleBall}
             />
           </div>
 
@@ -215,9 +230,7 @@ function HomePage() {
             </>
           )}
 
-          {view === "loading" && (
-            <LoadingScreen />
-          )}
+          {view === "loading" && <LoadingScreen />}
 
           {view === "results" && result && (
             <div className="results-grid">
@@ -234,14 +247,14 @@ function HomePage() {
           )}
         </div>
       </section>
-      
+
       <div className="grass-container">
         <img src={grass} alt="grass" className="grass" />
       </div>
 
       {/* 🔹 Player - Controlado por showPlayer */}
       {showPlayer && (
-        <Player 
+        <Player
           isPlaying={isPlaying}
           songName={songs[currentSongIndex].name}
           artistName={songs[currentSongIndex].artist}
@@ -251,10 +264,10 @@ function HomePage() {
           duration={duration}
           onPlayPause={toggleMusic}
           onNext={handleNext}
-          onPrev={handlePrevious} // 👈 Nuevo
+          onPrev={handlePrevious}
           onSeek={handleSeek}
-          onClose={togglePlayerVisibility} // 👈 Nuevo
-          isClosing={isClosing} // 👈 Nuevo
+          onClose={toggleBall}
+          isClosing={isClosing}
         />
       )}
 
@@ -262,7 +275,7 @@ function HomePage() {
       <footer className="footer">
         <p className="footer__credit">
           Created by{" "}
-          <a 
+          <a
             href="https://nosoyunmarinero.github.io/francis-portfolio-frontend/" 
             target="_blank" 
             rel="noopener noreferrer"

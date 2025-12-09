@@ -149,20 +149,22 @@ function HomePage() {
     }
   };
 
-  // 🔹 Envía la URL al backend y controla el flujo de vistas
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setView("loading");
 
-    try {
-      const response = await axios.post("http://localhost:3001/full-analysis", { url });
-      setResult(response.data);
-      setView("results");
-    } catch (error) {
-      console.error("❌ Error calling backend:", error);
-      setView("form");
-    }
-  };
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
+  // 🔹 Envía la URL al backend y controla el flujo de vistas
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setView("loading");
+
+  try {
+    const response = await axios.post(`${API_URL}/full-analysis`, { url });
+    setResult(response.data);
+    setView("results");
+  } catch (error) {
+    console.error("❌ Error calling backend:", error);
+    setView("form");
+  }
+};
 
   // 🔹 Reinicia el flujo al formulario inicial
   const handleRestart = () => {

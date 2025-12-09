@@ -1,12 +1,13 @@
-# Imagen base con Node 20 sobre Debian (más estable para Puppeteer/Lighthouse)
+# Imagen base con Node 20 sobre Debian slim
 FROM node:20-slim
 
-# Instalar librerías que necesita Chromium/Puppeteer
+# Instalar Chromium y librerías necesarias para Puppeteer/Lighthouse
 RUN apt-get update && apt-get install -y \
     wget \
     gnupg \
     ca-certificates \
     fonts-liberation \
+    chromium \
     libasound2 \
     libatk1.0-0 \
     libatk-bridge2.0-0 \
@@ -49,8 +50,9 @@ RUN npm install --production
 # Copiar el resto del código
 COPY . .
 
-# Exponer el puerto (Cloud Run usa PORT env var)
+# Configurar variables de entorno
 ENV PORT=8080
+ENV CHROME_PATH=/usr/bin/chromium
 EXPOSE 8080
 
 # Comando de inicio

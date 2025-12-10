@@ -1,5 +1,5 @@
 # Imagen base con Node 20 sobre Debian slim
-FROM node:20-slim
+FROM node:22-slim
 
 # Instalar Chromium y librerías necesarias para Puppeteer/Lighthouse
 RUN apt-get update && apt-get install -y \

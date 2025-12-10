@@ -1,4 +1,4 @@
-# Imagen base con Node 20 sobre Debian slim
+# Imagen base con Node 22 sobre Debian slim
 FROM node:22-slim
 
 # Instalar Chromium y librerías necesarias para Puppeteer/Lighthouse
@@ -52,7 +52,15 @@ COPY . .
 
 # Configurar variables de entorno
 ENV PORT=8080
+ENV NODE_ENV=production
 ENV CHROME_PATH=/usr/bin/chromium
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+
+# 🔹 NUEVO: Variables para optimizar Chrome en Cloud Run
+ENV CHROME_BIN=/usr/bin/chromium
+ENV LIGHTHOUSE_CHROMIUM_PATH=/usr/bin/chromium
+
 EXPOSE 8080
 
 # Comando de inicio

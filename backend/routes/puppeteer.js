@@ -7,30 +7,43 @@ const router = express.Router();
 export async function runPuppeteer(url) {
   if (!url) throw new Error("You must provide a URL");
 
-  const browser = await puppeteer.launch({
-    headless: true,
-    executablePath: process.env.CHROME_PATH,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-  });
-  const page = await browser.newPage();
+  let browser;
+  try {
+    browser = await puppeteer.launch({
+      headless: true,
+      executablePath: process.env.CHROME_PATH || '/usr/bin/chromium',
+      args: [
+        "--no-sandbox", 
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-gpu",
+        "--single-process", // Ayuda en entornos con recursos limitados
+        "--no-zygote"
+      ],
+    });
+    const page = await browser.newPage();
 
-  const start = Date.now();
-  await page.goto(url, { waitUntil: "networkidle2", timeout: 30000 });
-  const end = Date.now();
+    const start = Date.now();
+    await page.goto(url, { waitUntil: "networkidle2", timeout: 30000 });
+    const end = Date.now();
 
-  const loadTime = end - start;
-  const title = await page.title();
+    const loadTime = end - start;
+    const title = await page.title();
 
-  await browser.close();
-
-  return {
-    url,
-    title,
-    loadTime: `${loadTime} ms`,
-  };
+    return {
+      url,
+      title,
+      loadTime: `${loadTime} ms`,
+    };
+  } finally {
+    // 🔹 CRÍTICO: Siempre cerrar el browser
+    if (browser) {
+      await browser.close();
+    }
+  }
 }
 
-// 🔹 Router HTTP (sigue funcionando igual)
+// 🔹 Router HTTP
 router.post("/", async (req, res) => {
   const { url } = req.body;
 

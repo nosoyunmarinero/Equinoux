@@ -19,7 +19,7 @@ It provides a modern React/Vite frontend with a **Frutiger Dark aesthetic** and 
   - Seek bar with real-time progress
   - Background music while analyzing
 - **🚀 Deployed on GitHub Pages**:  
-  👉 [Live Demo](https://nosoyunmarinero.github.io/equinoux/)
+  👉 [Live Demo](https://nosoyunmarinero.github.io/Equinoux/)
 
 ### Backend (Node + Express)
 - **⚡ Three Analysis Endpoints**:

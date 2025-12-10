@@ -11,20 +11,31 @@ export async function runPuppeteer(url) {
   try {
     browser = await puppeteer.launch({
       headless: true,
-      executablePath: process.env.CHROME_PATH || '/usr/bin/chromium',
+      executablePath: process.env.CHROME_PATH || "/usr/bin/chromium",
       args: [
-        "--no-sandbox", 
+        "--no-sandbox",
         "--disable-setuid-sandbox",
         "--disable-dev-shm-usage",
         "--disable-gpu",
         "--single-process", // Ayuda en entornos con recursos limitados
-        "--no-zygote"
+        "--no-zygote",
       ],
     });
+
     const page = await browser.newPage();
 
+    // 🔹 Opcional: bloquear recursos pesados para páginas grandes
+    await page.setRequestInterception(true);
+    page.on("request", (req) => {
+      if (["image", "stylesheet", "font"].includes(req.resourceType())) {
+        req.abort();
+      } else {
+        req.continue();
+      }
+    });
+
     const start = Date.now();
-    await page.goto(url, { waitUntil: "networkidle2", timeout: 30000 });
+    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 120000 });
     const end = Date.now();
 
     const loadTime = end - start;
@@ -53,9 +64,11 @@ router.post("/", async (req, res) => {
   } catch (error) {
     let userMessage = "Could not analyze the page with Puppeteer :(";
     if (error.message.includes("timeout")) {
-      userMessage = "The page took too long to load and the analysis was canceled ):";
+      userMessage =
+        "The page took too long to load and the analysis was canceled ):";
     } else if (error.message.includes("500")) {
-      userMessage = "The page server returned an internal error (500) :(";
+      userMessage =
+        "The page server returned an internal error (500) :(";
     } else if (error.message.includes("net::ERR_CONNECTION_RESET")) {
       userMessage = "The connection to the page was interrupted :c";
     }

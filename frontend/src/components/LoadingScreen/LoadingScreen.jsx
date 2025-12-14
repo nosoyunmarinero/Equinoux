@@ -14,7 +14,6 @@ function LoadingScreen() {
   "Scanning every corner of your page structure 🏗️",
   "Measuring load times... tick tock! ⏱️",
   "Peeking at those security headers 🔒",
-  "Checking if your site looks great on mobile 📱",
   "Analyzing all those images and resources 🖼️",
   "We're getting close now! Almost done ⭐",
   "Our robots are crunching the numbers 🤖",

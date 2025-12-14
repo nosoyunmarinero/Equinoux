@@ -1,0 +1,222 @@
+/* Modal Overlay */
+.support-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Modal Content */
+.support-modal-content {
+  position: relative;
+  max-width: 500px;
+
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+    border: 3px solid rgb(41, 26, 109);
+  border-radius: 40px;
+  padding: 40px;
+  box-shadow: 0 0 50px rgba(151, 153, 243, 0.5);
+  animation: slideUp 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Modal Title */
+.support-modal-title {
+  color: rgba(240, 248, 255, 0.9);
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 24px;
+  margin: 0;
+  text-align: center;
+  text-shadow: 0 2px 10px rgba(151, 153, 243, 0.5);
+}
+
+/* Modal Link */
+.support-modal-link {
+  color: #9799f3;
+  font-family: 'Courier New', monospace;
+  text-transform: lowercase;
+  letter-spacing: 1px;
+  font-size: 16px;
+  text-decoration: none;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  transition: all 300ms ease;
+  text-align: center;
+}
+
+.support-modal-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 0px 20px rgba(151, 153, 243, 0.6);
+  transform: scale(1.05);
+  color: #ffffff;
+}
+
+/* Modal Image */
+.support-modal-image {
+  width: 250px;
+  height: auto;
+  display: block;
+  border-radius: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  transition: all 300ms ease;
+}
+
+.support-modal-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(151, 153, 243, 0.4);
+}
+
+/* Modal Subtitle */
+.support-modal-subtitle {
+  color: rgba(240, 248, 255, 0.6);
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+  margin: 0;
+  text-align: center;
+}
+
+/* Close Button - AHORA FUERA DEL MODAL */
+.support-modal-close {
+  position: absolute;
+  top: -60px; /* 👈 Arriba del modal */
+  right: -60px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 28px;
+  font-family: 'Courier New', monospace;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 300ms ease;
+  text-transform: uppercase;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.support-modal-close:hover {
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0px 0px 25px rgba(255, 255, 255, 0.8);
+  transform: scale(1.15) rotate(90deg);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 📱 RESPONSIVE PARA TABLETS (768px o menos) */
+@media (max-width: 768px) {
+  .support-modal-content {
+    max-width: 85%;
+    padding: 30px;
+    border-radius: 30px;
+    gap: 15px;
+  }
+
+  .support-modal-title {
+    font-size: 20px;
+    letter-spacing: 2px;
+  }
+
+  .support-modal-link {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+
+  .support-modal-image {
+    width: 200px;
+  }
+
+  .support-modal-subtitle {
+    font-size: 11px;
+  }
+
+  .support-modal-close {
+    width: 45px;
+    height: 45px;
+    font-size: 24px;
+    top: -55px;
+    right: -5px;
+  }
+}
+
+/* 📱 RESPONSIVE PARA MÓVILES (480px o menos) */
+@media (max-width: 480px) {
+  .support-modal-content {
+    max-width: 90%;
+    padding: 25px;
+    border-radius: 20px;
+    gap: 12px;
+  }
+
+  .support-modal-title {
+    font-size: 18px;
+    letter-spacing: 2px;
+  }
+
+  .support-modal-link {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+
+  .support-modal-image {
+    width: 180px;
+  }
+
+  .support-modal-subtitle {
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+
+  .support-modal-close {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    top: -50px;
+    right: 0;
+  }
+}

@@ -6,6 +6,7 @@ import AxeResults from "../Results/AxeResults";
 import "./HomePage.css";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import Player from "../Player/Player";
+import Support from "../Support/Support";
 
 import ball from "../../images/ball.png";
 import background2 from "../../images/background2.jpg";
@@ -286,9 +287,7 @@ const handleSubmit = async (e) => {
             Francisco Romero
           </a>
         </p>
-        <button className="footer__support-btn">
-          Support 💙
-        </button>
+       <Support />
       </footer>
     </>
   );

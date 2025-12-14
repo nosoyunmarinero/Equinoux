@@ -1,6 +1,7 @@
 import express from "express";
 import * as chromeLauncher from "chrome-launcher";
 import lighthouse from "lighthouse";
+import os from "os"; // 👈 Importa esto
 
 const router = express.Router();
 
@@ -10,17 +11,27 @@ export async function runAnalysis(url) {
 
   let chrome;
   try {
-    // 🔹 CRÍTICO: Agregar flags para Cloud Run y especificar chromePath
-    chrome = await chromeLauncher.launch({ 
+    // 🔹 Detecta el sistema operativo y ajusta la configuración
+    const isProduction = process.env.NODE_ENV === 'production';
+    const platform = os.platform();
+    
+    const launchOptions = {
       chromeFlags: [
         "--headless",
         "--no-sandbox",
         "--disable-setuid-sandbox",
         "--disable-dev-shm-usage",
         "--disable-gpu"
-      ],
-      chromePath: process.env.CHROME_PATH || '/usr/bin/chromium'
-    });
+      ]
+    };
+
+    // 🔹 Solo especifica chromePath en producción (Cloud Run)
+    if (isProduction || platform === 'linux') {
+      launchOptions.chromePath = process.env.CHROME_PATH || '/usr/bin/chromium';
+    }
+    // 🔹 En local (Windows/Mac), deja que chrome-launcher lo encuentre automáticamente
+
+    chrome = await chromeLauncher.launch(launchOptions);
     
     const options = { 
       port: chrome.port, 
@@ -79,7 +90,6 @@ export async function runAnalysis(url) {
       issues,
     };
   } finally {
-    // 🔹 CRÍTICO: Siempre cerrar Chrome, incluso si hay error
     if (chrome) {
       try {
         await chrome.kill();
@@ -90,7 +100,6 @@ export async function runAnalysis(url) {
   }
 }
 
-// 🔹 Router HTTP (sigue funcionando igual)
 router.post("/", async (req, res) => {
   const { url } = req.body;
 

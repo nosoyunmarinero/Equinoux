@@ -27,19 +27,19 @@ function LighthouseResults({ data }) {
       <div className="result-card__scores">
         <div className="score-item">
           <span className="score-item__label">Performance:</span>
-          <span className="score-item__value">{performance}</span>
+          <span className="score-item__value">{performance} / 1</span>
         </div>
         <div className="score-item">
           <span className="score-item__label">Accessibility:</span>
-          <span className="score-item__value">{accessibility}</span>
+          <span className="score-item__value">{accessibility} / 1</span>
         </div>
         <div className="score-item">
           <span className="score-item__label">SEO:</span>
-          <span className="score-item__value">{seo}</span>
+          <span className="score-item__value">{seo} / 1</span>
         </div>
         <div className="score-item">
           <span className="score-item__label">Best Practices:</span>
-          <span className="score-item__value">{bestPractices}</span>
+          <span className="score-item__value">{bestPractices} / 1</span>
         </div>
       </div>
 

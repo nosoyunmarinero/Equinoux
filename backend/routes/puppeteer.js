@@ -9,18 +9,22 @@ export async function runPuppeteer(url) {
 
   let browser;
   try {
-    browser = await puppeteer.launch({
+    const launchOptions = {
       headless: true,
-      executablePath: process.env.CHROME_PATH || "/usr/bin/chromium",
       args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",
         "--disable-dev-shm-usage",
         "--disable-gpu",
-        "--single-process", // Ayuda en entornos con recursos limitados
-        "--no-zygote",
       ],
-    });
+    };
+
+    // 👇 Solo se usa en Cloud Run donde está configurado
+    if (process.env.CHROME_PATH) {
+      launchOptions.executablePath = process.env.CHROME_PATH;
+    }
+
+    browser = await puppeteer.launch(launchOptions);
 
     const page = await browser.newPage();
 

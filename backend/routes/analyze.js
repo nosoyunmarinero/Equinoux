@@ -21,7 +21,14 @@ export async function runAnalysis(url) {
         "--no-sandbox",
         "--disable-setuid-sandbox",
         "--disable-dev-shm-usage",
-        "--disable-gpu"
+        "--disable-gpu",
+        "--disable-software-rasterizer",  
+        "--disable-extensions",            
+        "--disable-background-networking", 
+        "--no-first-run",                  
+        "--no-zygote",                     
+        "--single-process",                
+        "--disable-web-security"           
       ]
     };
 
@@ -36,8 +43,13 @@ export async function runAnalysis(url) {
     const options = { 
       port: chrome.port, 
       output: "json", 
-      logLevel: "info",
-      onlyCategories: ['performance', 'accessibility', 'seo', 'best-practices']
+      logLevel: "error",
+      onlyCategories: ['performance', 'accessibility',],
+      disableStorageReset: true,
+      throttlingMethod: 'simulate', //  más rápido, menos RAM
+      screenEmulation: { disabled: true }, // ahorra recursos
+      formFactor: 'desktop', 
+      maxWaitForLoad: 30000,
     };
     
     const runnerResult = await lighthouse(url, options);
@@ -70,6 +82,7 @@ export async function runAnalysis(url) {
         "button-name": report.audits["button-name"],
         "color-contrast": report.audits["color-contrast"],
       }),
+      /*
       seo: getIssues({
         "meta-description": report.audits["meta-description"],
         viewport: report.audits["viewport"],
@@ -79,15 +92,18 @@ export async function runAnalysis(url) {
         "uses-https": report.audits["uses-https"],
         "no-vulnerable-libraries": report.audits["no-vulnerable-libraries"],
       }),
+      */
     };
 
     return {
       url,
       performance: report.categories?.performance?.score ?? null,
       accessibility: report.categories?.accessibility?.score ?? null,
+      /*
       seo: report.categories?.seo?.score ?? null,
       bestPractices: report.categories?.["best-practices"]?.score ?? null,
       issues,
+      */
     };
   } finally {
     if (chrome) {
@@ -116,6 +132,8 @@ router.post("/", async (req, res) => {
       userMessage = "The Lighthouse report did not return complete data :(";
     } else if (error.message.includes("ECONNREFUSED")) {
       userMessage = "Could not connect to Chrome browser :(";
+    } else if (error.message.includes("Protocol error")) {
+      userMessage = "Chrome ran out of memory :(";
     }
 
     res.json({
@@ -125,8 +143,10 @@ router.post("/", async (req, res) => {
       userMessage,
       performance: null,
       accessibility: null,
+      /*
       seo: null,
       bestPractices: null,
+      */
       issues: {},
     });
   }

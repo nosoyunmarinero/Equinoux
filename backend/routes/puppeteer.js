@@ -12,10 +12,19 @@ export async function runPuppeteer(url) {
     const launchOptions = {
       headless: true,
       args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--disable-dev-shm-usage",
-        "--disable-gpu",
+        '--no-sandbox',
+    '--disable-setuid-sandbox',
+    '--disable-dev-shm-usage',  // Importante para RAM baja
+    '--disable-gpu',
+    '--disable-software-rasterizer',
+    '--disable-extensions',
+    '--disable-background-networking',
+    '--disable-background-timer-throttling',
+    '--disable-backgrounding-occluded-windows',
+    '--disable-renderer-backgrounding',
+    '--no-first-run',
+    '--no-zygote',
+    '--single-process'
       ],
     };
 
@@ -76,7 +85,6 @@ router.post("/", async (req, res) => {
     } else if (error.message.includes("net::ERR_CONNECTION_RESET")) {
       userMessage = "The connection to the page was interrupted :c";
     }
-
     res.json({
       url,
       error: true,

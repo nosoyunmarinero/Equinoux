@@ -4,7 +4,7 @@ import cors from "cors";
 const app = express();
 
 // 1) Puerto dinámico para Cloud Run, fallback local
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 // 2) CORS: permite dev y producción (GH Pages)
 const allowedOrigins = [
@@ -42,5 +42,5 @@ app.use("/axe", axeRoute);
 app.get("/health", (req, res) => res.status(200).send("ok"));
 
 app.listen(PORT, () => {
-  console.log(`Servidor backend corriendo en http://localhost:${PORT}`);
+  console.log(`Servidor backend corriendo en puerto ${PORT}`);
 });

@@ -23,14 +23,13 @@ It provides a modern React/Vite frontend with a **Frutiger Dark aesthetic** and 
 
 ### Backend (Node + Express)
 - **⚡ Three Analysis Endpoints**:
-  - `/analyze` → Lighthouse (performance, accessibility, SEO, best practices)
+  - `/analyze` → Lighthouse (performance, accessibility)
   - `/puppeteer` → Page load time and title extraction
   - `/axe` → Accessibility violations detection
 - **🔄 Combined Analysis**:
   - `/full-analysis` → Runs all three tools simultaneously and returns unified JSON
-- **🐳 Containerized with Docker**: Chromium-based browser automation
-- **☁️ Deployed on Google Cloud Run**:  
-  👉 [API Endpoint](https://backend-341194274972.us-central1.run.app)
+- **☁️ Deployed on Render**:  
+  👉 [API Endpoint](https://equinoux.onrender.com)
 - **💰 Serverless Architecture**: Auto-scales from 0 to 10 instances, pay only for actual usage
 
 ---
@@ -55,18 +54,8 @@ It provides a modern React/Vite frontend with a **Frutiger Dark aesthetic** and 
   - `axe-core` - Accessibility testing engine
 - **Containerization**: Docker
 - **Browser**: Chromium (headless)
-- **Deployment**: Google Cloud Run
+- **Deployment**: Render
 - **Infrastructure**: Serverless with automatic scaling
-
-### DevOps & Infrastructure
-- **Container Registry**: Google Container Registry (GCR)
-- **CI/CD**: Google Cloud Build
-- **Compute**: 
-  - Memory: 2Gi
-  - CPU: 2 cores
-  - Timeout: 300s
-  - Auto-scaling: 0-10 instances
-- **CORS**: Configured for cross-origin requests
 
 ---
 
@@ -75,7 +64,7 @@ It provides a modern React/Vite frontend with a **Frutiger Dark aesthetic** and 
 
 ### Base URL
 ```
-Production: https://backend-341194274972.us-central1.run.app
+Production: https://equinoux.onrender.com
 Local: http://localhost:3001
 ```
 
@@ -176,36 +165,6 @@ Content-Type: application/json
 
 ---
 
-## 🐳 Docker Configuration
-
-The backend uses a custom Dockerfile optimized for running Chromium in a containerized environment:
-
-```dockerfile
-FROM node:22-slim
-
-# Install Chromium and dependencies
-RUN apt-get update && apt-get install -y \
-    chromium \
-    fonts-liberation \
-    libnss3 \
-    libgbm1 \
-    # ... (35+ system dependencies)
-    && rm -rf /var/lib/apt/lists/*
-
-# Environment variables for Chromium
-ENV CHROME_PATH=/usr/bin/chromium
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
-
-# Application setup
-WORKDIR /app
-COPY package*.json ./
-RUN npm install --production
-COPY . .
-
-EXPOSE 8080
-CMD ["node", "app.js"]
-```
 
 **Key Configuration:**
 - **No-sandbox mode**: Required for containerized environments

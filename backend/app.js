@@ -12,7 +12,6 @@ const allowedOrigins = [
   "https://nosoyunmarinero.github.io"
 ];
 
-app.use(express.json());
 app.use(
   cors({
     origin: allowedOrigins,
@@ -20,6 +19,8 @@ app.use(
     allowedHeaders: ["Content-Type"],
   })
 );
+
+app.use(express.json());
 
 // Ruta raíz para verificar
 app.get("/", (req, res) => {

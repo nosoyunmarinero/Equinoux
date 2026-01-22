@@ -1,7 +1,7 @@
 import express from "express";
 import * as chromeLauncher from "chrome-launcher";
 import lighthouse from "lighthouse";
-import os from "os"; // 👈 Importa esto
+import os from "os";
 
 const router = express.Router();
 
@@ -11,9 +11,8 @@ export async function runAnalysis(url) {
 
   let chrome;
   try {
-    // 🔹 Detecta el sistema operativo y ajusta la configuración
-    const isProduction = process.env.NODE_ENV === 'production';
-    const platform = os.platform();
+   // const isProduction = process.env.NODE_ENV === 'production';
+    // const platform = os.platform();
     
     const launchOptions = {
       chromeFlags: [
@@ -32,11 +31,10 @@ export async function runAnalysis(url) {
       ]
     };
 
-    // 🔹 Solo especifica chromePath en producción (Cloud Run)
-    if (isProduction || platform === 'linux') {
-      launchOptions.chromePath = process.env.CHROME_PATH || '/usr/bin/chromium';
-    }
-    // 🔹 En local (Windows/Mac), deja que chrome-launcher lo encuentre automáticamente
+    // 👇 ELIMINADO - deja que chrome-launcher lo encuentre solo
+    // if (isProduction || platform === 'linux') {
+    //   launchOptions.chromePath = process.env.CHROME_PATH || '/usr/bin/chromium';
+    // }
 
     chrome = await chromeLauncher.launch(launchOptions);
     
@@ -44,10 +42,10 @@ export async function runAnalysis(url) {
       port: chrome.port, 
       output: "json", 
       logLevel: "error",
-      onlyCategories: ['performance', 'accessibility',],
+      onlyCategories: ['performance', 'accessibility'],
       disableStorageReset: true,
-      throttlingMethod: 'simulate', //  más rápido, menos RAM
-      screenEmulation: { disabled: true }, // ahorra recursos
+      throttlingMethod: 'simulate',
+      screenEmulation: { disabled: true },
       formFactor: 'desktop', 
       maxWaitForLoad: 30000,
     };
@@ -82,28 +80,14 @@ export async function runAnalysis(url) {
         "button-name": report.audits["button-name"],
         "color-contrast": report.audits["color-contrast"],
       }),
-      /*
-      seo: getIssues({
-        "meta-description": report.audits["meta-description"],
-        viewport: report.audits["viewport"],
-        canonical: report.audits["canonical"],
-      }),
-      bestPractices: getIssues({
-        "uses-https": report.audits["uses-https"],
-        "no-vulnerable-libraries": report.audits["no-vulnerable-libraries"],
-      }),
-      */
     };
 
+    // 👇 ERROR ARREGLADO - faltaba "issues" en el return
     return {
       url,
       performance: report.categories?.performance?.score ?? null,
       accessibility: report.categories?.accessibility?.score ?? null,
-      /*
-      seo: report.categories?.seo?.score ?? null,
-      bestPractices: report.categories?.["best-practices"]?.score ?? null,
-      issues,
-      */
+      issues, // 👈 ESTO ESTABA COMENTADO Y CAUSABA ERROR
     };
   } finally {
     if (chrome) {
@@ -134,6 +118,8 @@ router.post("/", async (req, res) => {
       userMessage = "Could not connect to Chrome browser :(";
     } else if (error.message.includes("Protocol error")) {
       userMessage = "Chrome ran out of memory :(";
+    } else if (error.message.includes("ENOENT")) { // 👈 NUEVO
+      userMessage = "Chromium is not installed on the server :(";
     }
 
     res.json({
@@ -143,10 +129,6 @@ router.post("/", async (req, res) => {
       userMessage,
       performance: null,
       accessibility: null,
-      /*
-      seo: null,
-      bestPractices: null,
-      */
       issues: {},
     });
   }
